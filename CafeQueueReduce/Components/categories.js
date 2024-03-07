@@ -39,7 +39,7 @@ const Categories = () => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -84,15 +84,19 @@ const Categories = () => {
 export default Categories;
 
 const styles = StyleSheet.create({
+  container: {
+    paddingTop: 20, // או כל ערך שתרצה, כדי להזיז את הלחצנים למטה
+  },
   cont: {
     marginHorizontal: 10,
     marginVertical: 5,
-    padding: 5,
+    padding: 10, // שינוי בפדינג לכפתורים
     backgroundColor: "#DB7093",
-    borderRadius: 4,
+    borderRadius: 10, // שינוי בעיגוליות הכפתורים
+    justifyContent: "center", // למרכז את הטקסט בכפתור
+    alignItems: "center", // למרכז את הטקסט בכפתור
   },
   text: {
-    paddingHorizontal: 5,
     color: "white",
     fontWeight: "500",
   },
@@ -118,9 +122,10 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   openButton: {
+    marginTop: 20, // שינוי במרווח שמעל הכפתור
     backgroundColor: "#F194FF",
     borderRadius: 20,
-    padding: 10,
+    padding: 15, // שינוי בפדינג של הכפתור
     elevation: 2,
   },
   textStyle: {
