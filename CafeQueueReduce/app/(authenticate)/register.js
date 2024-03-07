@@ -12,7 +12,7 @@ import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import { Entypo, Feather, Ionicons } from "@expo/vector-icons";
 import {supabase } from "../../Supabase";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 const register = () => {
   const [name, setName] = useState("");
@@ -33,7 +33,6 @@ const register = () => {
         Alert.alert("Error while registering","please try again")
     }
 }
-
   return (
     <SafeAreaView style={styles.first_view}>
       <View style={{ marginTop: 50 }}>
