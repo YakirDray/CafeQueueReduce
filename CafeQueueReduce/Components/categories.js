@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const Categories = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -56,26 +56,33 @@ const Categories = () => {
           </TouchableOpacity>
         )}
       />
+
       <Modal
         animationType="slide"
-        transparent={true}
         visible={modalVisible}
+        presentationStyle="fullScreen"
         onRequestClose={() => {
           setModalVisible(false);
         }}
+        
       >
+        <ScrollView>
+          <View>
+            <Text style ={{padding:60}}>dfhfhfghf</Text>
+          </View>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>{selectedItem?.name}</Text>
+            {/* <Text style={styles.modalText}>{selectedItem?.name}</Text> */}
             {/* Add content related to the specific category */}
             <TouchableOpacity
-              style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+              style={{ ...styles.openButton, backgroundColor: "green" }}
               onPress={() => setModalVisible(!modalVisible)}
             >
-              <Text style={styles.textStyle}>Close</Text>
+              <Text style={styles.textStyle}>חזור לקטגוריות</Text>
             </TouchableOpacity>
           </View>
         </View>
+        </ScrollView>
       </Modal>
     </View>
   );
@@ -104,7 +111,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
+    marginTop: 100,
+    
   },
   modalView: {
     margin: 20,
@@ -115,11 +123,12 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 0,
     },
-    shadowOpacity: 0.25,
+   // shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5,
+    //elevation: 5,
+    
   },
   openButton: {
     marginTop: 20, // שינוי במרווח שמעל הכפתור
@@ -132,6 +141,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
+    fontSize:17,
   },
   modalText: {
     marginBottom: 15,
