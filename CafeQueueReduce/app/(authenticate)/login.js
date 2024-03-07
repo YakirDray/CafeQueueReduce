@@ -13,6 +13,8 @@ import { Entypo } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { supabase } from "../../Supabase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+
 const login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -51,6 +53,7 @@ const login = () => {
 
   return (
     <SafeAreaView style={styles.first_view}> 
+      
       <View style={{ marginTop: 50 }}>
         <Text style={styles.f_title}>הקפיטריה של סמי שמעון</Text>
       </View>
