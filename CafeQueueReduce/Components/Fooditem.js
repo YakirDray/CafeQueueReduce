@@ -2,6 +2,7 @@ import { Pressable,StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import MenuItem from './MenuItem';
+import { render } from '@testing-library/react-native';//לבדיקת יחידה לא למחוק!
 
 const FoodItem = ({item}) => {
   const data = [item];
@@ -47,3 +48,13 @@ const styles = StyleSheet.create({
   }
 
 })
+//בדיקת יחידה למקרה ולא קיבלנו אייטם תקין מהמניו
+test('renders without crashing', () => {
+  render(<FoodItem />);
+});
+// בדיקת יחידה למקרה וקיבלנו אייטם לא תקין מהמניו שהוא מכיל לפחות טקסט
+test('renders "item not received" when item prop is not passed', () => {
+  const { getByText } = render(<FoodItem />);
+  const textElement = getByText(/item not received/i);
+  expect(textElement).toBeTruthy();
+});
