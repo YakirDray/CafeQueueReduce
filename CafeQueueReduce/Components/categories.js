@@ -68,14 +68,14 @@ const Categories = () => {
       >
         <ScrollView>
           <View>
-            <Text style ={{padding:60}}>dfhfhfghf</Text>
+            <Text style={styles.modalText}>{selectedItem?.name}</Text> 
           </View>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             {/* <Text style={styles.modalText}>{selectedItem?.name}</Text> */}
             {/* Add content related to the specific category */}
             <TouchableOpacity
-              style={{ ...styles.openButton, backgroundColor: "green" }}
+              style={{ ...styles.openButton, backgroundColor: "#DB7093" }}
               onPress={() => setModalVisible(!modalVisible)}
             >
               <Text style={styles.textStyle}>חזור לקטגוריות</Text>
@@ -125,9 +125,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 0,
     },
-   // shadowOpacity: 0.25,
     shadowRadius: 4,
-    //elevation: 5,
     
   },
   openButton: {
@@ -144,7 +142,15 @@ const styles = StyleSheet.create({
     fontSize:17,
   },
   modalText: {
-    marginBottom: 15,
+    marginTop: 60,
     textAlign: "center",
+    fontSize: 40,
+    fontFamily: "Arial", // סוג הפונט
+    fontWeight: "bold",
+    color: "black",
+    padding: 20, // מרווח פנימי לטקסט
+    borderRadius: 10, // רינועי פינה
+    borderWidth: 2, // עובי קו המסגרת
+    borderColor: "#FFFFFF", // צבע קו המסגרת
   },
 });
