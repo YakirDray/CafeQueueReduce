@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { FlatList, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-//import { render, fireEvent } from "@testing-library/react-native";
+import { FlatList, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View ,Image} from "react-native";
+import {test ,render, fireEvent } from "@testing-library/react-native";
 
 
 const Categories = () => {
@@ -18,7 +18,7 @@ const Categories = () => {
     },
     {
       id: "3",
-      name: "מאפים"
+      name: "מאפים",
     },
     {
       id: "4",
@@ -53,6 +53,7 @@ const Categories = () => {
             onPress={() => handleItemPress(item)}
           >
             <View style={styles.cont}>
+              <Image source={item.image} style={styles.image} />
               <Text style={styles.text}>{item?.name}</Text>
             </View>
           </TouchableOpacity>
@@ -94,16 +95,21 @@ export default Categories;
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 20, // או כל ערך שתרצה, כדי להזיז את הלחצנים למטה
+    paddingTop: 20, 
   },
   cont: {
     marginHorizontal: 10,
     marginVertical: 5,
-    padding: 10, // שינוי בפדינג לכפתורים
+    padding: 10, 
     backgroundColor: "#DB7093",
-    borderRadius: 10, // שינוי בעיגוליות הכפתורים
-    justifyContent: "center", // למרכז את הטקסט בכפתור
-    alignItems: "center", // למרכז את הטקסט בכפתור
+    borderRadius: 10,  
+    justifyContent: "center",
+    alignItems: "center", 
+  },
+  image: {
+    width: 50, 
+    height: 50,
+    marginBottom: 5,  
   },
   text: {
     color: "white",
@@ -155,7 +161,9 @@ const styles = StyleSheet.create({
     borderWidth: 2, // עובי קו המסגרת
     borderColor: "#FFFFFF", // צבע קו המסגרת
   },
+
 });
+//AI בדיקת יחידה בלי רכיב 
 // בדיקה שבעזרתה נבדוק שכאשר לוחצים על כפתור "חזור לקטגוריות", המודל ייסגר ונחזור למסך הקטגוריות
 test("pressing 'Back to Categories' button should close the modal and return to categories screen", async () => {
   // נכין את הרכיב לבדיקה
