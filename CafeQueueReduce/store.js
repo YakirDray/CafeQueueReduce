@@ -1,14 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { configureStore } from "@reduxjs/toolkit";
+import CartReducer from "./redux/CartReducer";
 
-const store = () => {
-  return (
-    <View>
-      <Text>store</Text>
-    </View>
-  )
-}
-
-export default store
-
-const styles = StyleSheet.create({})
+export default configureStore({
+  reducer: {
+    cart: CartReducer,
+  },
+});
