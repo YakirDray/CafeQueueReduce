@@ -14,28 +14,7 @@ const cart = () => {
   const router = useRouter();
   const cart = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
-  const instructions = [
-    {
-      id: "0",
-      name: "Avoid Ringing",
-      iconName: "bell",
-    },
-    {
-      id: "1",
-      name: "Leave at the door",
-      iconName: "door-open",
-    },
-    {
-      id: "2",
-      name: "directions to reach",
-      iconName: "directions",
-    },
-    {
-      id: "3",
-      name: "Avoid Calling",
-      iconName: "phone-alt",
-    },
-  ];
+
   const total = cart
     ?.map((item) => item.quantity * item.price)
     .reduce((curr, prev) => curr + prev, 0);

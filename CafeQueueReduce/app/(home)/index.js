@@ -307,8 +307,6 @@ const manu = [
     time: "10 min",
   },
 ];
-
-
 const index = () => {
 const [filterQuery, setFilterQuery] = useState("");
 const [data,setData] = useState([]);
@@ -418,9 +416,7 @@ const [data,setData] = useState([]);
     </ScrollView>
   );
 };
-
 export default index;
-
 const styles = StyleSheet.create({
   cont: {
     flex: 1,

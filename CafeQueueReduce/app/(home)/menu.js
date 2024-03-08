@@ -78,33 +78,27 @@ const Menu = [
     ],
   },
 ];
-
 const menu = () => {
   const params = useLocalSearchParams();
  const router = useRouter();
   const dispatch = useDispatch()
- 
   const renderItem = ({ item }) => (
     <View style={styles.itemContainer}>
-
       <Image source={ item.image } style={styles.itemImage} />
       <View style={styles.itemTextContainer}>
         <Text style={styles.itemName}>{item.name}</Text>
         <Text style={styles.itemDescription}>{item.description}</Text>
-        <Text style={styles.itemPrice}>Price: {item.price}₪</Text>
+        <Text style={styles.itemPrice}>Price:{item.price}₪</Text>
         <Text style={styles.itemPrepTime}>Prep time: {item.prepTime}</Text>
         <Pressable
       style={styles.addToCart}
       onPress={() => dispatch(addToCart(item))}
     >
       <Text style={styles.t}>Add to Cart</Text>
-    </Pressable>
-        
-       
+    </Pressable> 
       </View>
     </View>
   );
-
   const renderCategory = ({ item }) => (
     <View style={styles.categoryContainer}>
       <Text style={styles.categoryName}>{item.category}</Text>
@@ -135,22 +129,17 @@ const menu = () => {
     </View>
     </View>
   );
-
   return (
     <ScrollView style={styles.container}>
       <FlatList
         data={Menu}
         renderItem={renderCategory}
         keyExtractor={(item) => item.category}
-      />
-      
+      /> 
     </ScrollView>
   );
 };
-
-
 export default menu
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
