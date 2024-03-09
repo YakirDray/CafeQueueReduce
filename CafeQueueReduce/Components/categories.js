@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FlatList, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View ,Image} from "react-native";
 //import {test ,render, fireEvent } from "@testing-library/react-native";
-
+import Categories from './categories.test'
 
 const Categories = () => {
   const [modalVisible, setModalVisible] = useState(false);
