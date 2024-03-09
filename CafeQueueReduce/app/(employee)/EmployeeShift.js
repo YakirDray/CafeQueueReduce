@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
-//מסך של כניסה ויציאה ממשמרת לעובדים הכולל שעות שניות ודקות
+import { View, Text, Button, StyleSheet, TouchableOpacity, StatusBar } from 'react-native';
+
+// פונקציה לפורמט זמן בתצוגה נוחה
 const formatTime = (totalSeconds) => {
   const hours = Math.floor(totalSeconds / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);
@@ -27,15 +28,15 @@ const EmployeeShiftScreen = () => {
     setIsOnShift(!isOnShift);
   };
 
+  // עדכון זמן המשמרת בכל שנייה
   useEffect(() => {
     if (isOnShift) {
-      // Update shift duration every second
       const interval = setInterval(() => {
         const currentTime = new Date();
         const durationInMilliseconds = currentTime - shiftStartTime;
         const durationInSeconds = durationInMilliseconds / 1000;
         setShiftDuration(durationInSeconds);
-      }, 1000); // Update every second
+      }, 1000);
 
       return () => clearInterval(interval);
     }
@@ -43,6 +44,9 @@ const EmployeeShiftScreen = () => {
 
   return (
     <View style={styles.container}>
+      {/* קביעת הצבע של סרגל הסטטוס */}
+      <StatusBar backgroundColor="#00BFFF" />
+      
       <View style={styles.Viewtitle}>
         <Text style={styles.title}>כניסה ויציאה ממשמרת </Text>
       </View>
@@ -65,10 +69,10 @@ const EmployeeShiftScreen = () => {
       <Button
         title="Back to Home"
         onPress={() => {
-          // Navigate back to home screen
-          // Implement navigation logic here
+          // חזרה למסך הבית
+          // כאן נוכל להוסיף לוגיקה לניווט
         }}
-        color="#00BFFF" // צבע תכלת
+        color="#00BFFF"
       />
     </View>
   );
@@ -90,7 +94,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
     borderRadius: 20,
-    backgroundColor: '#00BFFF', // צבע תכלת
+    backgroundColor: '#00BFFF',
     padding: 15,
     color: 'white',
   },
@@ -98,26 +102,26 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10,
     borderRadius: 20,
-    backgroundColor: '#00BFFF', // צבע תכלת
+    backgroundColor: '#00BFFF',
     padding: 15,
     color: 'black',
   },
-  title:{
-    fontSize:30,
-    color:"white",
-    backgroundColor:"#00BFFF",
-    borderRadius:30, // עיגול כותרת
-    fontWeight:"bold",
+  title: {
+    fontSize: 30,
+    color: "white",
+    backgroundColor: "#00BFFF",
+    borderRadius: 30,
+    fontWeight: "bold",
     padding: 10,
   },
-  Viewtitle:{
-    marginBottom:40,
-    borderRadius:30, // עיגול כותרת
+  Viewtitle: {
+    marginBottom: 40,
+    borderRadius: 30,
     overflow: 'hidden',
   },
-  ClockButton:{
+  ClockButton: {
     marginTop: 20,
-    backgroundColor: "#00BFFF", // צבע תכלת
+    backgroundColor: "#00BFFF",
     borderRadius: 20,
     padding: 15,
     elevation: 2,
