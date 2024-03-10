@@ -255,4 +255,3 @@ const order = () => {
 
 export default order;
 
-const styles = StyleSheet.create({});

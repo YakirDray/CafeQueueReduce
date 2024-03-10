@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, Pressable } from "react-native";
+import { Text, View, ScrollView, Pressable } from "react-native";
 import React from "react";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -14,7 +14,10 @@ const cart = () => {
   const router = useRouter();
   const cart = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
-
+  const instructions = [
+    { id: 1, name: "עד הכיתה", iconName: "door-open" },
+    // Add more instructions as needed
+  ];
   const total = cart
     ?.map((item) => item.quantity * item.price)
     .reduce((curr, prev) => curr + prev, 0);
@@ -154,6 +157,7 @@ const cart = () => {
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               {instructions?.map((item, index) => (
                 <Pressable
+                key={item.id}
                   style={{
                     margin: 10,
                     borderRadius: 10,
@@ -437,5 +441,3 @@ const cart = () => {
 };
 
 export default cart;
-
-const styles = StyleSheet.create({});

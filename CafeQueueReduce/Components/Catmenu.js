@@ -5,6 +5,7 @@ import { useRouter } from "expo-router";
 import { Entypo } from "@expo/vector-icons";
 const Catmenu = ({ item }) => {
   const router = useRouter();
+  const menu = JSON.stringify(menu);
   return (
     <Pressable
       onPress={() =>
