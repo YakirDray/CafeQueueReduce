@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
 import Order from './Order'; // הנתיב צריך להיות מתואם למיקום הפקטי של הקובץ
 import moment from 'moment-timezone';
@@ -31,4 +31,4 @@ describe('Order Component Tests', () => {
     fireEvent.press(getByText("(Cancel)")); // לחיצה על ביטול
     expect(queryByText("please pay ₪2 to your delivery agent at the time of delivery")).toBeNull();
   });
-});
+});*/

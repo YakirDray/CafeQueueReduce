@@ -14,8 +14,8 @@ import { AntDesign } from "@expo/vector-icons";
 import Carousel from "../../Components/Carousal";
 import Categories from "../../Components/categories";
 import Catmenu from "../../Components/Catmenu"
-import menu from "./menu";
-import { UseSelector, useSelector } from "react-redux";
+import enu from "./menu";
+import { useSelector } from "react-redux";
 import { supabase } from "../../Supabase";
 const recommended = [
   {
@@ -312,8 +312,7 @@ const [filterQuery, setFilterQuery] = useState("");
 const [data,setData] = useState([]);
   // מחשב מחדש את רשימת הפריטים להצגה בהתאם לשאילתת הסינון
   const itemToRender = useMemo(() => {
-    // אם filterQuery ריקה, אין צורך בסינון ונחזיר את כל התפריט
-// sourcery skip: use-braces
+    
     if (!filterQuery) return manu;
     // סינון התפריט על פי המחרוזת ב-filterQuery (ללא הבחנה בין אותיות רישיות לקטנות)
     return menu.filter((item) => item.name.toLowerCase().includes(filterQuery.toLowerCase()));
@@ -410,7 +409,7 @@ const [data,setData] = useState([]);
 </View>
 <View style={{marginHorizontal:8}}>
             {data?.map((item,index) => (
-                <Hotel key={index} item={item} menu={item?.menu}/>
+                <manu key={index} item={item} menu={item?.menu}/>
             ))}
       </View>
     </ScrollView>

@@ -80,7 +80,9 @@ const Menu = [
 ];
 const menu = () => {
   const params = useLocalSearchParams();
- const router = useRouter();
+  const router = useRouter();
+  const cart = useSelector((state) => state.cart.cart);
+  console.log(cart);
   const dispatch = useDispatch()
   const renderItem = ({ item }) => (
     <View style={styles.itemContainer}>
@@ -129,6 +131,7 @@ const menu = () => {
     </View>
     </View>
   );
+
   return (
     <ScrollView style={styles.container}>
       <FlatList
