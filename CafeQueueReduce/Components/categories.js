@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { FlatList, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View ,Image} from "react-native";
 //import {test ,render, fireEvent } from "@testing-library/react-native";
-
-
+//קריאה לקובץ בדיקות היחידה
+//import Categories from './categories.test'
+//פונקציית קטגוריות 
 const Categories = () => {
+  //מצבים של החלוניות כרגע על מצב 0 במידה ומשתמש לוחץ הופך ל-1
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-
+  //מערך של טיפוסים מסוג items לכל טיפוס יש שדה של מספר מזהה ושם
   const items = [
     {
       id: "1",
@@ -34,7 +36,8 @@ const Categories = () => {
       name: "הפסקות איסוף אוכל",
     },
   ];
-
+    //פונקציה שמקבלת כפרמטר את טיפוס מוצר הפונקציה משנה את המשתנה selecteditem 
+    //לאותו מוצר שנלחץ על ידי המשתמש ומשנה את המודל ל-1 מה שגורם לחלונית להיפת בעת לחיצה
   const handleItemPress = (item) => {
     setSelectedItem(item);
     setModalVisible(true);
@@ -47,6 +50,9 @@ const Categories = () => {
         showsHorizontalScrollIndicator={false}
         data={items}
         renderItem={({ item }) => (
+          //פעולה שמאפשרת לחיצה כאן מתבצעת קריאה לפונקציה handleItemPress אליה שולחים את 
+          //המוצר הספציפי שנלחץ והפונקציה פותחת חלונית
+          
           <TouchableOpacity
             activeOpacity={0.8}
             style={{ marginTop: 5 }}
@@ -61,21 +67,24 @@ const Categories = () => {
       />
 
       <Modal
-        animationType="slide"
-        visible={modalVisible}
-        presentationStyle="fullScreen"
-        onRequestClose={() => {
+      //עיצוב ויצירת חלונית שנפתחת בעת לחיצה על קטגוריה מהסרגל
+        animationType="slide"//אינמציה של הופעת החלונית כשנפתחת
+        visible={modalVisible}//const [modalVisible, setModalVisible] = useState(false); מגיב לפי הערך המוחזר מכאן
+        presentationStyle="fullScreen"//תצוגת החלונית בסך מלא
+        onRequestClose={() => {//באייפון כאשר המתשמש מחליק עם היד את החלונית אז נשנה את הופעת החלונית ל-0
           setModalVisible(false);
         }}
-        
+
       >
+        
         <ScrollView>
+
           <View>
-            <Text style={styles.modalText}>{selectedItem?.name}</Text> 
+            <Text style={styles.modalText}>{selectedItem?.name}</Text> //
           </View>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-           
+     
             <TouchableOpacity
               style={{ ...styles.openButton, backgroundColor: "#DB7093" }}
               onPress={() => setModalVisible(!modalVisible)}
@@ -94,21 +103,21 @@ export default Categories;
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 1, 
+    paddingTop: 20, 
   },
   cont: {
-    marginHorizontal: 5,
+    marginHorizontal: 10,
     marginVertical: 5,
-    padding: 5, 
+    padding: 10, 
     backgroundColor: "#DB7093",
-    borderRadius: 6,  
+    borderRadius: 10,  
     justifyContent: "center",
     alignItems: "center", 
   },
   image: {
-    width: 10, 
-    height: 10,
-    marginBottom: 15,  
+    width: 50, 
+    height: 50,
+    marginBottom: 5,  
   },
   text: {
     
@@ -147,7 +156,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
-    fontSize:25,
+    fontSize:17,
   },
   modalText: {
     marginTop: 60,
