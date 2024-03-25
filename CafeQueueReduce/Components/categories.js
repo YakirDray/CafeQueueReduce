@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FlatList, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View ,Image} from "react-native";
 //import {test ,render, fireEvent } from "@testing-library/react-native";
 //קריאה לקובץ בדיקות היחידה
-import Categories from './categories.test'
+//import Categories from './categories.test'
 //פונקציית קטגוריות 
 const Categories = () => {
   //מצבים של החלוניות כרגע על מצב 0 במידה ומשתמש לוחץ הופך ל-1

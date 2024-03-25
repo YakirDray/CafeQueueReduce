@@ -13,30 +13,31 @@ import { Entypo } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { supabase } from "../../Supabase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
 
- useEffect(() => {
-    const checkLogin = async () => {
-      try {
-        const token = await AsyncStorage.getItem("authToken");
-        if (token) {
-          router.replace("/(home)");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  // useEffect(() => {
+  //   const checkLogin = async () => {
+  //     try {
+  //       const token = await AsyncStorage.getItem("authToken");
+  //       if (token) {
+  //         router.replace("/(home)");
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
-    checkLogin();
-  }, []);
+  //   checkLogin();
+  // }, []);
 
   const signUpWithEmail = async () => {
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
-      password: password
+      password: password,
     });
     if (error) {
       console.error("Error signing up:", error.message);
@@ -50,7 +51,7 @@ const login = () => {
   };
 
   return (
-    <SafeAreaView style={styles.first_view}> 
+    <SafeAreaView style={styles.first_view}>
       <View style={{ marginTop: 50 }}>
         <Text style={styles.f_title}>הקפיטריה של סמי שמעון</Text>
       </View>
@@ -100,6 +101,13 @@ const login = () => {
           style={{ marginTop: 15 }}
         >
           <Text style={styles.register}>לקוח חדש? לחץ להרשם</Text>
+        </Pressable>
+        {/* כפתור התחברות למנהלים */}
+        <Pressable
+          onPress={() => router.replace("/admin-login")} // החלף כתובת זו על פי הניתוב שלך
+          style={{ marginTop: 15 }}
+        >
+          <Text style={styles.adminLogin}>התחברות למנהלים</Text>
         </Pressable>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -164,5 +172,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "gray",
     fontSize: 25,
+  },
+  adminLogin: {
+    textAlign: "center",
+    color: "blue", // ניתן לשנות צבע כדי להתאים לעיצוב שלך
+    fontSize: 20,
   },
 });
