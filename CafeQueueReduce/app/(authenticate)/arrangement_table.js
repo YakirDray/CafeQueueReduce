@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, ScrollView, StyleSheet,StatusBar } from 'react-native';
-
+import { useRouter } from "expo-router";
 const WeeklyScheduleScreen = () => {
+  const router = useRouter();
   const [scheduleData, setScheduleData] = useState([
     { day: 'Sunday', employees: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''] },
     { day: 'Monday', employees: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''] },

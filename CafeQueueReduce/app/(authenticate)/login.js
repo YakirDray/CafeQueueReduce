@@ -46,6 +46,8 @@ const login = () => {
     if (data) {
       const token = data?.session?.access_token;
       AsyncStorage.setItem("authToken", token);
+      
+     
       router.replace("/(home)");
     }
   };
@@ -104,7 +106,7 @@ const login = () => {
         </Pressable>
         {/* כפתור התחברות למנהלים */}
         <Pressable
-          onPress={() => router.replace("/admin-login")} // החלף כתובת זו על פי הניתוב שלך
+          onPress={() => router.replace("/arrangement_table")} // החלף כתובת זו על פי הניתוב שלך
           style={{ marginTop: 15 }}
         >
           <Text style={styles.adminLogin}>התחברות למנהלים</Text>
