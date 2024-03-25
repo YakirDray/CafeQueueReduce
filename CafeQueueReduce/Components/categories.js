@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,  
   },
   text: {
-    fontSize:"20",
+    
     color: "white",
     fontWeight: "500",
   },

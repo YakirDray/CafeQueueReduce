@@ -215,7 +215,6 @@ const Menu = [
       },
     ],
   },
-
   {
     category: "פיתה,בגט",
     categoryImage: require("../../assets/salmonbaguette.webp"),
@@ -268,10 +267,9 @@ const Menu = [
       },
     ],
   },
-
   {
     category: "חטיפים",
-    categoryImage: require("../../assets/salmonbaguette.webp"),
+    categoryImage: require("../../assets/Doritos.webp"),
     item: [
       {
         id: "1",
@@ -317,7 +315,7 @@ const Menu = [
   },
   {
     category: "בורקסים",
-    categoryImage: "assets/schnitzelbaget.jpg",
+    categoryImage: require("../../assets/Bulgariancheese.webp"),
     item: [
       {
         id: "1",
@@ -325,7 +323,7 @@ const Menu = [
         price: 12,
         rating: 4.8,
         prepTime: "0 min",
-        image: "assets/cheesebourekas.jpg",
+        image: require("../../assets/burekasch.webp"),
       },
       {
         id: "2",
@@ -333,7 +331,7 @@ const Menu = [
         price: 14,
         rating: 4.7,
         prepTime: "0 min",
-        image: "assets/eggcheesebourekas.jpg",
+        image: require("../../assets/eggburekas.webp"),
       },
       {
         id: "3",
@@ -341,7 +339,7 @@ const Menu = [
         price: 10,
         rating: 4.6,
         prepTime: "0 min",
-        image: "assets/olivebourekas.jpg",
+        image: require("../../assets/oliveburekas.webp"),
       },
       {
         id: "4",
@@ -349,49 +347,33 @@ const Menu = [
         price: 13,
         rating: 4.9,
         prepTime: "0 min",
-        image: "assets/cheeseolivebourekas.jpg",
+        image: require("../../assets/cheesebureka.webp"),
       },
+
       {
         id: "5",
-        name: "בורקס תרד וגבינה",
-        price: 15,
-        rating: 4.5,
-        prepTime: "0 min",
-        image: "assets/spinachcheesebourekas.jpg",
-      },
-      {
-        id: "6",
         name: "בורקס תפוחי אדמה",
         price: 12,
         rating: 4.8,
         prepTime: "0 min",
-        image: "assets/potatobourekas.jpg",
+        image: require("../../assets/potatoburekas.webp"),
       },
       {
-        id: "7",
+        id: "6",
         name: "בורקס בולגרית",
         price: 14,
         rating: 4.7,
         prepTime: "0 min",
-        image: "assets/bulgariancheesebourekas.jpg",
+        image: require("../../assets/Bulgariancheese.webp"),
       },
       {
-        id: "8",
-        name: "בורקס בולגרית וזיתים",
-        price: 15,
-        rating: 4.6,
-        prepTime: "0 min",
-        image: "assets/bulgarianolivebourekas.jpg",
-      },
-      {
-        id: "9",
+        id: "7",
         name: "בורקס תפוחי אדמה ופטריות",
         price: 16,
         rating: 4.9,
         prepTime: "0 min",
-        image: "assets/potatomushroombourekas.jpg",
+        image: require("../../assets/mushroomburekas.webp"),
       },
-     
     ],
   },
 ];

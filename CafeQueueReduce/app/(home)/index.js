@@ -75,7 +75,7 @@ const firstimpress = [
     id: "0",
     name: "הזמנה מוקדמת",
     description: "הנחות מרשימות למזמינים מראש",
-    image: require("../../assets/steak.webp"),
+    image: require("../../assets/manu.webp"),
   },
   
 ];
