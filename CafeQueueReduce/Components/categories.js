@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FlatList, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View ,Image} from "react-native";
 //import {test ,render, fireEvent } from "@testing-library/react-native";
-import Categories from './categories.test'
+
 
 const Categories = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -75,8 +75,7 @@ const Categories = () => {
           </View>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            {/* <Text style={styles.modalText}>{selectedItem?.name}</Text> */}
-            {/* Add content related to the specific category */}
+           
             <TouchableOpacity
               style={{ ...styles.openButton, backgroundColor: "#DB7093" }}
               onPress={() => setModalVisible(!modalVisible)}
@@ -95,23 +94,24 @@ export default Categories;
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 20, 
+    paddingTop: 1, 
   },
   cont: {
-    marginHorizontal: 10,
+    marginHorizontal: 5,
     marginVertical: 5,
-    padding: 10, 
+    padding: 5, 
     backgroundColor: "#DB7093",
-    borderRadius: 10,  
+    borderRadius: 6,  
     justifyContent: "center",
     alignItems: "center", 
   },
   image: {
-    width: 50, 
-    height: 50,
-    marginBottom: 5,  
+    width: 10, 
+    height: 10,
+    marginBottom: 15,  
   },
   text: {
+    fontSize:"20",
     color: "white",
     fontWeight: "500",
   },
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
-    fontSize:17,
+    fontSize:25,
   },
   modalText: {
     marginTop: 60,
