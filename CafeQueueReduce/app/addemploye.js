@@ -19,4 +19,20 @@ export default function App() {
     setIsModalVisible(false); // סגירת המודל ברגע שנשמרו הפרטים
   };
 
+  return (
+    <View style={{ flex: 1, backgroundColor: "white", padding: 60 }}>
+      <ScrollView>
+        <Button title='להוספת כרטיס עובד חדש:' onPress={() => setIsModalVisible(true)} color="green" />
+        <Image source={logoImg} style={{ flex: 1 }} />
+      </ScrollView>
+      </View>
+
+
+
+
+
+
+
+
+  );
 }
