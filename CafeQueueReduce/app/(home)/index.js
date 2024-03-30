@@ -277,4 +277,17 @@ const styles = StyleSheet.create({
   pressedAnimation: {
     transform: [{ scale: 1.1 }], // הגדלת הכפתור
   },
+  logoutButton: {
+    //position: "absolute",
+    top: 10,
+    right: 10,
+    backgroundColor: "#fff",
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "#000",
+    alignSelf: "flex-end",
+    
+},
 });
