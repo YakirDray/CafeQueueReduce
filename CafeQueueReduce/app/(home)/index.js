@@ -278,7 +278,6 @@ const styles = StyleSheet.create({
     transform: [{ scale: 1.1 }], // הגדלת הכפתור
   },
   logoutButton: {
-    //position: "absolute",
     top: 10,
     right: 10,
     backgroundColor: "#fff",
