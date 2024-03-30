@@ -1,23 +1,26 @@
 import { StyleSheet, Text, View, Pressable, Image } from "react-native";
 import React from "react";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { Entypo } from "@expo/vector-icons";
 
-import menu from "../app/(home)/menu";
-const Catmenu = ({ item }) => {
+
+const Catmenu = ({item}) => {
+
   const router = useRouter();
-  const menu = JSON.stringify(menu);
+
   return (
     <Pressable
       onPress={() =>
         router.push({
           pathname: "/menu",
           params: {
+            description:item.description,
             id: item.id,
+            image: item.image,
             name: item.name,
-            price: item.price,
-            aggregate_rating: item.aggregate_rating,
+            perpTime:item.perptime,
+            price:item.price,
+            quantity:item.quantity,
+            rating:item.rating,
           },
         })
       }

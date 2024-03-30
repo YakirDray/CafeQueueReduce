@@ -12,7 +12,8 @@ import { addToCart } from "../../Redux/Cart";
 import { useDispatch } from "react-redux";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useSelector } from "react-redux";
-const Menu = [
+
+const Menuitems = [
   {
     category: "בצלחת",
     categoryImage: require("../../assets/schnitzel.webp"),
@@ -88,7 +89,7 @@ const Menu = [
     categoryImage: require("../../assets/teaf.webp"),
     item: [
       {
-        id: "1",
+        id: "8",
         name: "לימונדה ביתית",
         price: 12,
         rating: 4.7,
@@ -97,7 +98,7 @@ const Menu = [
         image: require("../../assets/lemonade.webp"),
       },
       {
-        id: "2",
+        id: "9",
         name: "אספרסו",
         price: 10,
         rating: 4.5,
@@ -106,7 +107,7 @@ const Menu = [
         image: require("../../assets/espresoshort.jpg"),
       },
       {
-        id: "3",
+        id: "10",
         name: "תה ירוק עם נענע",
         price: 8,
         rating: 4.8,
@@ -115,7 +116,7 @@ const Menu = [
         image: require("../../assets/greentea.webp"),
       },
       {
-        id: "4",
+        id: "11",
         name: "שייק פירות יער",
         price: 15,
         rating: 4.9,
@@ -124,7 +125,7 @@ const Menu = [
         image: require("../../assets/milkshake.webp"),
       },
       {
-        id: "5",
+        id: "12",
         name: "מוקה קר",
         price: 14,
         rating: 4.6,
@@ -133,7 +134,7 @@ const Menu = [
         image: require("../../assets/coldcoffee.webp"),
       },
       {
-        id: "6",
+        id: "13",
         name: "קפה שחור",
         price: 16,
         rating: 4.7,
@@ -142,7 +143,7 @@ const Menu = [
         image: require("../../assets/espreso.jpg"),
       },
       {
-        id: "7",
+        id: "14",
         name: "מים עם לימון ונענע",
         price: 5,
         rating: 4.9,
@@ -151,7 +152,7 @@ const Menu = [
         image: require("../../assets/weather.webp"),
       },
       {
-        id: "8",
+        id: "15",
         name: "תה פירות יער",
         price: 7,
         rating: 4.8,
@@ -160,7 +161,7 @@ const Menu = [
         image: require("../../assets/teaf.webp"),
       },
       {
-        id: "9",
+        id: "16",
         name: "מיץ גזר טבעי",
         price: 12,
         rating: 4.7,
@@ -169,7 +170,7 @@ const Menu = [
         image: require("../../assets/carrot.webp"),
       },
       {
-        id: "10",
+        id: "17",
         name: "סודה ליים",
         price: 6,
         rating: 4.6,
@@ -178,7 +179,7 @@ const Menu = [
         image: require("../../assets/weather.webp"),
       },
       {
-        id: "11",
+        id: "18",
         name: "קפה קר",
         price: 8,
         rating: 4.5,
@@ -187,7 +188,7 @@ const Menu = [
         image: require("../../assets/coldcoffee.webp"),
       },
       {
-        id: "12",
+        id: "19",
         name: "מיץ תפוזים טבעי",
         price: 10,
         rating: 4.8,
@@ -196,7 +197,7 @@ const Menu = [
         image: require("../../assets/orangejuice.webp"),
       },
       {
-        id: "13",
+        id: "20",
         name: "תה קמומיל",
         price: 6,
         rating: 4.7,
@@ -205,7 +206,7 @@ const Menu = [
         image: require("../../assets/chamomiletea.webp"),
       },
       {
-        id: "14",
+        id: "21",
         name: "שייק וניל",
         price: 14,
         rating: 4.6,
@@ -220,7 +221,7 @@ const Menu = [
     categoryImage: require("../../assets/salmonbaguette.webp"),
     item: [
       {
-        id: "1",
+        id: "22",
         name: "בגט שווארמה",
         price: 55,
         rating: 4.8,
@@ -229,7 +230,7 @@ const Menu = [
         image: require("../../assets/shawarma.webp"),
       },
       {
-        id: "2",
+        id: "23",
         name: "בגט שניצל",
         price: 50,
         rating: 4.4,
@@ -238,7 +239,7 @@ const Menu = [
         image: require("../../assets/schnitzelbaget.webp"),
       },
       {
-        id: "6",
+        id: "24",
         name: "פיתה סביח",
         price: 40,
         rating: 4.6,
@@ -247,7 +248,7 @@ const Menu = [
         image: require("../../assets/sabich.webp"),
       },
       {
-        id: "7",
+        id: "25",
         name: "פיתה קבב",
         price: 38,
         rating: 4.5,
@@ -256,7 +257,7 @@ const Menu = [
         image: require("../../assets/kebab.webp"),
       },
       {
-        id: "8",
+        id: "26",
         name: "בגט סלמון",
         price: 60,
         rating: 4.7,
@@ -272,7 +273,7 @@ const Menu = [
     categoryImage: require("../../assets/Doritos.webp"),
     item: [
       {
-        id: "1",
+        id: "27",
         name: "שוקולד מריר",
         price: 5,
         rating: 4.8,
@@ -280,7 +281,7 @@ const Menu = [
         image: require("../../assets/darkchocolate.webp"),
       },
       {
-        id: "2",
+        id: "28",
         name: "סוכריות גומי פירות",
         price: 3,
         rating: 4.7,
@@ -288,7 +289,7 @@ const Menu = [
         image: require("../../assets/gummy.webp"),
       },
       {
-        id: "3",
+        id: "29",
         name: "בר שוקולד עם אגוזים",
         price: 7,
         rating: 4.9,
@@ -296,7 +297,7 @@ const Menu = [
         image: require("../../assets/chocolatenuts.webp"),
       },
       {
-        id: "4",
+        id: "30",
         name: "סוכריות מנטה",
         price: 2,
         rating: 4.6,
@@ -304,7 +305,7 @@ const Menu = [
         image: require("../../assets/darkchocolate.webp"),
       },
       {
-        id: "5",
+        id: "31",
         name: "שוקולד לבן",
         price: 5,
         rating: 4.5,
@@ -318,7 +319,7 @@ const Menu = [
     categoryImage: require("../../assets/Bulgariancheese.webp"),
     item: [
       {
-        id: "1",
+        id: "32",
         name: "בורקס גבינות",
         price: 12,
         rating: 4.8,
@@ -326,7 +327,7 @@ const Menu = [
         image: require("../../assets/burekasch.webp"),
       },
       {
-        id: "2",
+        id: "33",
         name: "בורקס ביצה וגבינה",
         price: 14,
         rating: 4.7,
@@ -334,7 +335,7 @@ const Menu = [
         image: require("../../assets/eggburekas.webp"),
       },
       {
-        id: "3",
+        id: "34",
         name: "בורקס זיתים",
         price: 10,
         rating: 4.6,
@@ -342,7 +343,7 @@ const Menu = [
         image: require("../../assets/oliveburekas.webp"),
       },
       {
-        id: "4",
+        id: "35",
         name: "בורקס גבינה וזיתים",
         price: 13,
         rating: 4.9,
@@ -351,7 +352,7 @@ const Menu = [
       },
 
       {
-        id: "5",
+        id: "36",
         name: "בורקס תפוחי אדמה",
         price: 12,
         rating: 4.8,
@@ -359,7 +360,7 @@ const Menu = [
         image: require("../../assets/potatoburekas.webp"),
       },
       {
-        id: "6",
+        id: "37",
         name: "בורקס בולגרית",
         price: 14,
         rating: 4.7,
@@ -367,7 +368,7 @@ const Menu = [
         image: require("../../assets/Bulgariancheese.webp"),
       },
       {
-        id: "7",
+        id: "38",
         name: "בורקס תפוחי אדמה ופטריות",
         price: 16,
         rating: 4.9,
@@ -377,12 +378,13 @@ const Menu = [
     ],
   },
 ];
-const menu = () => {
+const menu = ({}) => {
   const params = useLocalSearchParams();
   const router = useRouter();
   const cart = useSelector((state) => state.cart.cart);
   console.log(cart);
   const dispatch = useDispatch();
+
   const renderItem = ({ item }) => (
     <View style={styles.itemContainer}>
       <Image source={item.image} style={styles.itemImage} />
@@ -416,9 +418,11 @@ const menu = () => {
             router.push({
               pathname: "/cart",
               params: {
-                id: item.id,
                 name: item.name,
                 price: item.price,
+                rating: item.rating,
+                description:item.description,
+                
               },
             })
           }
@@ -428,11 +432,11 @@ const menu = () => {
       </View>
     </View>
   );
-
+  
   return (
     <ScrollView style={styles.container}>
       <FlatList
-        data={Menu}
+        data={Menuitems}
         renderItem={renderCategory}
         keyExtractor={(item) => item.category}
       />

@@ -1,0 +1,39 @@
+{
+    "menuItems": [
+      {
+        "category": "בצלחת",
+        "item": [
+          {
+            "id": "1",
+            "name": "שניצל עוף",
+            "price": 45,
+            "rating": 4.3,
+            "description": "שניצל עוף פריך מוגש עם תוספת לבחירה",
+            "prepTime": "15 min"
+          },
+          {
+            "id": "2",
+            "name": "סלט יווני",
+            "price": 38,
+            "rating": 4.6,
+            "description": "סלט יווני עשיר ומרענן עם גבינת פטה",
+            "prepTime": "10 min"
+          }
+        ]
+      },
+      {
+        "category": "שתייה",
+        "item": [
+          {
+            "id": "1",
+            "name": "לימונדה ביתית",
+            "price": 12,
+            "rating": 4.7,
+            "description": "לימונדה קרה ומרעננת, מוגשת עם קרח",
+            "prepTime": "5 min"
+          }
+        ]
+      }
+    ]
+  }
+  

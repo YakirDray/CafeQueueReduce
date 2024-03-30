@@ -1,5 +1,5 @@
 import {
-  Alert,
+  
   StyleSheet,
   Text,
   View,
@@ -8,15 +8,16 @@ import {
   TextInput,
   Image,
 } from "react-native";
-import React , {useState, useMemo,useEffect}from "react";
+import React, { useState, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import Carousel from "../../Components/Carousal";
 import Categories from "../../Components/categories";
-import Catmenu from "../../Components/Catmenu"
-
+import Catmenu from "../../Components/Catmenu";
 import { useSelector } from "react-redux";
 import { supabase } from "../../Supabase";
+import menu from "./menu";
+
 const recommended = [
   {
     id: 0,
@@ -25,26 +26,21 @@ const recommended = [
     time: "35 - 45",
     type: "",
   },
-  
+
   {
     id: 1,
     name: "בוקר טוב",
-    image:
-    require("../../assets/teaf.webp"),    time: "10 - 25",
+    image: require("../../assets/teaf.webp"),
+    time: "10 - 25",
     type: "",
   },
-
-
-  
 ];
-const items = [
- 
+const items = [ 
   {
     id: "1",
     name: "סוגיי הקפה שלנו",
     description: "Across Sami-Shamoon",
-    image:
-    require("../../assets/espreso.jpg"),
+    image: require("../../assets/espreso.jpg"),
   },
   {
     id: 2,
@@ -53,22 +49,22 @@ const items = [
     image: require("../../assets/shawarma.webp"),
     type: "",
   },
-  {  id: 3,
+  {
+    id: 3,
     name: "פיתות",
     description: "מבחר מאכלים בפיתה בליווי טחינה ותוספת",
     image: require("../../assets/sabich.webp"),
-   
+
     type: "",
   },
   {
-  id: 4,
-  name: "מתוקים",
-  description: "סוכריות גומי שוקולדים חטיפים חטיפי אנרגיה וכו.....",
-  image: require("../../assets/gummy.webp"),
-  
-  type: "",
+    id: 4,
+    name: "מתוקים",
+    description: "סוכריות גומי שוקולדים חטיפים חטיפי אנרגיה וכו.....",
+    image: require("../../assets/gummy.webp"),
+
+    type: "",
   },
- 
 ];
 const firstimpress = [
   {
@@ -77,39 +73,36 @@ const firstimpress = [
     description: "הנחות מרשימות למזמינים מראש",
     image: require("../../assets/manu.webp"),
   },
-  
 ];
+
 const index = () => {
-const [filterQuery, setFilterQuery] = useState("");
-const [data,setData] = useState([]);
-  // מחשב מחדש את רשימת הפריטים להצגה בהתאם לשאילתת הסינון
-  const itemToRender = useMemo(() => {
-    
-    if (!filterQuery) return firstimpress;
-    return firstimpress.filter((item) => item.name.toLowerCase().includes(filterQuery.toLowerCase()));
-  }, [filterQuery, firstimpress]);
-  const cart =useSelector((state)=>state.cart)
-  console.log(cart)
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const { data, error } = await supabase.from("menu").select("*");
-        console.log("Data:", data);
+
+  const cart = useSelector((state) => state.cart);
+  const [data, setData] = useState([]);
+  console.log(data);
+ 
+  
+  useEffect(() => {     
+    async function fetchData() {  
+      try { 
+        const { data, error } = (await supabase.from("orders").insert(cart));
         if (error) {
           console.error("Error fetching data:", error);
         } else {
-          setData(data);
+          setData(cart);
+          console.log("SUPA_WORKING", data);
         }
-      } catch (error) {
-        console.error("Error in fetchData:", error);
+      } catch (error) { 
+        console.error("Error in fetchData:", error); 
       }
     }
-
-    fetchData();
+  
+    fetchData(data.cart); 
   }, []);
 
+   
+  
 
-  console.log("data",data)
   return (
     <ScrollView style={styles.cont}>
       <View style={styles.v1}>
@@ -127,18 +120,21 @@ const [data,setData] = useState([]);
         </Pressable>
       </View>
       <View style={styles.v2}>
-        <TextInput placeholder="Welcome to the cafeteria of Sami Shamoon College" value={filterQuery}   onChangeText= { setFilterQuery}
-  style={{ flex: 1 }} />
+        <TextInput
+          placeholder="Welcome to the cafeteria of Sami Shamoon College"
+          
+          style={{ flex: 1 }}
+        />
         <AntDesign name="search1" size={24} color="blue" />
       </View>
-      <Carousel/>
-      <Categories />
+      <Carousel />
+      <Categories /> 
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {recommended?.map((item, index) => (
+        {recommended?.map((item) => (
           <View style={styles.vrecom}>
             <View>
-              <Image style={styles.img} source={ item?.image} />
+              <Image style={styles.img} source={item?.image} />
             </View>
             <View style={{ padding: 10, flexDirection: "column" }}>
               <Text style={styles.tname}>{item?.name}</Text>
@@ -150,7 +146,7 @@ const [data,setData] = useState([]);
                 <Ionicons name="time" size={24} color="green" />
                 <Text>{item?.time} mins</Text>
               </View>
-            </View>
+            </View> 
           </View>
         ))}
       </ScrollView>
@@ -160,10 +156,7 @@ const [data,setData] = useState([]);
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {items?.map((item, index) => (
           <View key={index} style={styles.vcatg}>
-            <Image
-              style={{ width: 50, height: 50 }}
-              source={ item?.image }
-            />
+            <Image style={{ width: 50, height: 50 }} source={item?.image} />
 
             <Text style={styles.tname2}>{item?.name}</Text>
 
@@ -173,16 +166,13 @@ const [data,setData] = useState([]);
       </ScrollView>
       <Text style={styles.tall}>למעבר לתפריט</Text>
 
-<View style={{ marginHorizontal: 8 }}>
-  {itemToRender?.map((item, index) => (
-    <Catmenu key={index} item={item} />
-  ))}
-</View>
-<View style={{marginHorizontal:1}}>
-            {data?.map((item,index) => (
-                <menu key={index} item={item} firstimpress={item?.firstimpress}/>
-            ))}
+      <View style={{ marginHorizontal: 8 }}>
+        {firstimpress?.map((item, index) => (
+          <Catmenu key={index} item={item}  />
+          
+        ))}
       </View>
+    
     </ScrollView>
   );
 };
