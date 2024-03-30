@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, SafeAreaView, KeyboardAvoidingView } from 'react-native';
 
-// באמצע עבודה פה לא לשנות !
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,4 +24,28 @@ const Login = () => {
     };
     checkLogin();
   }, []);
-}
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={{ marginTop: 50 }}>
+        <Text style={styles.f_title}>הקפיטריה של סמי שמעון</Text>
+      </View>
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>התחברות לעובד</Text>
+      </View>
+      <KeyboardAvoidingView behavior="padding" style={styles.inputContainer}>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.input}
+            value={email}
+            onChangeText={setEmail}
+            placeholder="הזן אימייל"
+          />
+        </View>
+        
+        
+        
+      </KeyboardAvoidingView>
+    </SafeAreaView>
+  );
+};
