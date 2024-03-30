@@ -19,20 +19,20 @@ const login = () => {
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  useEffect(() => {
-    const checkLogin = async () => {
-      try {
-        const token = await AsyncStorage.getItem("authToken");
+   useEffect(() => {
+     const checkLogin = async () => {
+     try {
+       const token = await AsyncStorage.getItem("authToken");
         if (token) {
-          router.replace("/(home)");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+         router.replace("/(home)");
+       }
+     } catch (error) {
+       console.log(error);
+     }
+     };
 
     checkLogin();
-  }, []);
+   }, []);
 
   const signUpWithEmail = async () => {
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -104,7 +104,7 @@ const login = () => {
         </Pressable>
         {/* כפתור התחברות למנהלים */}
         <Pressable
-          onPress={() => router.replace("/(admin)/adminLogin")} // החלף כתובת זו על פי הניתוב שלך
+          onPress={() => router.replace("/arrangement_table")} // החלף כתובת זו על פי הניתוב שלך
           style={{ marginTop: 15 }}
         >
           <Text style={styles.adminLogin}>התחברות למנהלים</Text>

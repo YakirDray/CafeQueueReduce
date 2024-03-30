@@ -196,19 +196,13 @@ const styles = StyleSheet.create({
     gap: 2,
     padding: 10,
   },
-  logoutButton: {
-    backgroundColor: "#fff",
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: "#000",
-    alignSelf: "flex-end",
-    
-},
-
-  logoutText: {
-    fontWeight: "bold",
+  p1: {
+    backgroundColor: "#6CB4EE",
+    width: 50,
+    height: 50,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
   },
   searchBar: {
     flexDirection: "row",

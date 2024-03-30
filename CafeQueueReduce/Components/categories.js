@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,  
   },
   text: {
+    
     color: "white",
     fontWeight: "500",
   },
