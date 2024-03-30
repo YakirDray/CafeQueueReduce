@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet, View, text, Image } from "react-native";
 import React from "react";
-import { SliderBox } from "react-native-image-slider-box"; // Corrected component name
+import { SliderBox } from "react-native-image-slider-box"; 
 /*import UTcarousel from '../unit_test/UTcarousel';*/
 
 function Carousal() {

@@ -59,7 +59,7 @@ const Categories = () => {
             onPress={() => handleItemPress(item)}
           >
             <View style={styles.cont}>
-              <Image source={item.image} style={styles.image} />
+           {/*<Image source={item.image} style={styles.image}/>*/}
               <Text style={styles.text}>{item?.name}</Text>
             </View>
           </TouchableOpacity>
@@ -80,7 +80,7 @@ const Categories = () => {
         <ScrollView>
 
           <View>
-            <Text style={styles.modalText}>{selectedItem?.name}</Text> //
+            <Text style={styles.modalText}>{selectedItem?.name}</Text> 
           </View>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>

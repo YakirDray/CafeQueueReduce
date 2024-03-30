@@ -15,7 +15,7 @@ import Categories from "../../Components/categories";
 import Catmenu from "../../Components/Catmenu";
 import { useSelector } from "react-redux";
 import { supabase } from "../../Supabase";
-import cart from "./cart";
+
 
 const recommended = [
   {
@@ -98,7 +98,7 @@ const index = () => {
       }
     }
     console.log("SUPA_WORKING", data);
-    setData(cart);
+    
   }, []);
 
   return (
