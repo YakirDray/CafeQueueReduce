@@ -105,12 +105,9 @@ const Index = () => {
       <View style={styles.v1}>
         <Ionicons name="restaurant-outline" size={24} color="#ffe4b5" />
         <View style={{ flex: 1 }}>
-          <Text style={{ fontSize: 15, fontWeight: "500" }}>אפליקצית ההזמנות של קפיטריית סמי שמעון</Text>
+          <Text style={{ fontSize: 15, fontWeight: "200" }}>אפליקצית ההזמנות של קפיטריית סמי שמעון</Text>
           <Text style={{ color: "#E52850", fontSize: 16, marginTop: 3 }}>הזמן מהר ולהרצאה לא תאחר</Text>
         </View>
-        <Pressable style={styles.p1}>
-          <Text>gruop 18</Text>
-        </Pressable>
       </View>
 
       <View style={styles.v2}>
@@ -185,7 +182,7 @@ const styles = StyleSheet.create({
   logoutButton: {
     position: "absolute",
     top: 10,
-    left: 10,
+    right: 10,
     backgroundColor: "#fff",
     paddingVertical: 5,
     paddingHorizontal: 10,
@@ -195,14 +192,7 @@ const styles = StyleSheet.create({
   },
   logoutText: {
     fontWeight: "bold",
-  },
-  p1: {
-    backgroundColor: "#6CB4EE",
-    width: 50,
-    height: 50,
-    borderRadius: 20,
-    justifyContent: "center",
-    alignItems: "center",
+    
   },
   v2: {
     flexDirection: "row",
