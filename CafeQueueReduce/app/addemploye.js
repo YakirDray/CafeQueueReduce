@@ -25,14 +25,62 @@ export default function App() {
         <Button title='להוספת כרטיס עובד חדש:' onPress={() => setIsModalVisible(true)} color="green" />
         <Image source={logoImg} style={{ flex: 1 }} />
       </ScrollView>
-      </View>
+      
+      <Modal visible={isModalVisible} onRequestClose={() => setIsModalVisible(false)} animationType="slide" presentationStyle="pageSheet">
+        <View style={{ flex: 1, backgroundColor: "white", padding: 20 }}>
+          <Text style={styles.modalTitle}>הוספת כרטיס עובד חדש</Text>
+
+          
+          <TextInput
+            placeholder="שם העובד"
+            style={styles.input}
+            value={employeeData.name}
+            onChangeText={text => setEmployeeData({ ...employeeData, name: text })}
+          />
+          <TextInput
+            placeholder="תפקיד"
+            style={styles.input}
+            value={employeeData.position}
+            onChangeText={text => setEmployeeData({ ...employeeData, position: text })}
+          />
+          <TextInput
+            placeholder="מספר פלאפון"
+            style={styles.input}
+            value={employeeData.department}
+            onChangeText={text => setEmployeeData({ ...employeeData, department: text })}
+          />
 
 
+        </View>
+      </Modal>
+    </View>
 
 
-
-
-
-
+        
   );
 }
+const styles = StyleSheet.create({
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+    fontSize: 25
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10
+  },
+  button: {
+    backgroundColor: 'green',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginTop: 10
+  }
+});
+
+  
