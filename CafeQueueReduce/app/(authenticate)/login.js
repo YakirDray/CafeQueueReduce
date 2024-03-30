@@ -104,7 +104,7 @@ const login = () => {
         </Pressable>
         {/* כפתור התחברות למנהלים */}
         <Pressable
-          onPress={() => router.replace("/admin-login")} // החלף כתובת זו על פי הניתוב שלך
+          onPress={() => router.replace("/(admin)/adminLogin")} // החלף כתובת זו על פי הניתוב שלך
           style={{ marginTop: 15 }}
         >
           <Text style={styles.adminLogin}>התחברות למנהלים</Text>
