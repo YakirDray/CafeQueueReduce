@@ -1,22 +1,13 @@
-import {
-  Alert,
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Pressable,
-  TextInput,
-  Image,
-} from "react-native";
-import React , {useState, useMemo,useEffect}from "react";
+import React, { useState, useMemo, useEffect } from "react";
+import { ScrollView, StyleSheet, Text, View, Pressable, TextInput, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import Carousel from "../../Components/Carousal";
 import Categories from "../../Components/categories";
-import Catmenu from "../../Components/Catmenu"
-
+import Catmenu from "../../Components/Catmenu";
 import { useSelector } from "react-redux";
 import { supabase } from "../../Supabase";
+
 const recommended = [
   {
     id: 0,
@@ -25,26 +16,21 @@ const recommended = [
     time: "35 - 45",
     type: "",
   },
-  
   {
     id: 1,
     name: "בוקר טוב",
-    image:
-    require("../../assets/teaf.webp"),    time: "10 - 25",
+    image: require("../../assets/teaf.webp"),
+    time: "10 - 25",
     type: "",
   },
-
-
-  
 ];
+
 const items = [
- 
   {
     id: "1",
     name: "סוגיי הקפה שלנו",
     description: "Across Sami-Shamoon",
-    image:
-    require("../../assets/espreso.jpg"),
+    image: require("../../assets/espreso.jpg"),
   },
   {
     id: 2,
@@ -53,23 +39,22 @@ const items = [
     image: require("../../assets/shawarma.webp"),
     type: "",
   },
-  {  id: 3,
+  {
+    id: 3,
     name: "פיתות",
     description: "מבחר מאכלים בפיתה בליווי טחינה ותוספת",
     image: require("../../assets/sabich.webp"),
-   
     type: "",
   },
   {
-  id: 4,
-  name: "מתוקים",
-  description: "סוכריות גומי שוקולדים חטיפים חטיפי אנרגיה וכו.....",
-  image: require("../../assets/gummy.webp"),
-  
-  type: "",
+    id: 4,
+    name: "מתוקים",
+    description: "סוכריות גומי שוקולדים חטיפים חטיפי אנרגיה וכו.....",
+    image: require("../../assets/gummy.webp"),
+    type: "",
   },
- 
 ];
+
 const firstimpress = [
   {
     id: "0",
@@ -77,19 +62,13 @@ const firstimpress = [
     description: "הנחות מרשימות למזמינים מראש",
     image: require("../../assets/steak.webp"),
   },
-  
 ];
-const index = () => {
-const [filterQuery, setFilterQuery] = useState("");
-const [data,setData] = useState([]);
-  // מחשב מחדש את רשימת הפריטים להצגה בהתאם לשאילתת הסינון
-  const itemToRender = useMemo(() => {
-    
-    if (!filterQuery) return firstimpress;
-    return firstimpress.filter((item) => item.name.toLowerCase().includes(filterQuery.toLowerCase()));
-  }, [filterQuery, firstimpress]);
-  const cart =useSelector((state)=>state.cart)
-  console.log(cart)
+
+const Index = () => {
+  const [filterQuery, setFilterQuery] = useState("");
+  const [data, setData] = useState([]);
+  const cart = useSelector((state) => state.cart);
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -108,45 +87,51 @@ const [data,setData] = useState([]);
     fetchData();
   }, []);
 
+  const handleLogout = () => {
+    // כאן יש להוסיף את הלוגיקה להתנתקות
+  };
 
-  console.log("data",data)
+  const itemToRender = useMemo(() => {
+    if (!filterQuery) return firstimpress;
+    return firstimpress.filter((item) => item.name.toLowerCase().includes(filterQuery.toLowerCase()));
+  }, [filterQuery, firstimpress]);
+
   return (
     <ScrollView style={styles.cont}>
+      <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+        <Text style={styles.logoutText}>התנתקות</Text>
+      </TouchableOpacity>
+
       <View style={styles.v1}>
         <Ionicons name="restaurant-outline" size={24} color="#ffe4b5" />
         <View style={{ flex: 1 }}>
-          <Text style={{ fontSize: 15, fontWeight: "500" }}>
-            אפליקצית ההזמנות של קפיטריית סמי שמעון
-          </Text>
-          <Text style={{ color: "#E52850", fontSize: 16, marginTop: 3 }}>
-            הזמן מהר ולהרצאה לא תאחר
-          </Text>
+          <Text style={{ fontSize: 15, fontWeight: "500" }}>אפליקצית ההזמנות של קפיטריית סמי שמעון</Text>
+          <Text style={{ color: "#E52850", fontSize: 16, marginTop: 3 }}>הזמן מהר ולהרצאה לא תאחר</Text>
         </View>
         <Pressable style={styles.p1}>
           <Text>gruop 18</Text>
         </Pressable>
       </View>
+
       <View style={styles.v2}>
-        <TextInput placeholder="Welcome to the cafeteria of Sami Shamoon College" value={filterQuery}   onChangeText= { setFilterQuery}
-  style={{ flex: 1 }} />
+        <TextInput placeholder="Welcome to the cafeteria of Sami Shamoon College" value={filterQuery} onChangeText={setFilterQuery} style={{ flex: 1 }} />
         <AntDesign name="search1" size={24} color="blue" />
       </View>
-      <Carousel/>
+
+      <Carousel />
       <Categories />
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {recommended?.map((item, index) => (
-          <View style={styles.vrecom}>
+          <View style={styles.vrecom} key={index}>
             <View>
-              <Image style={styles.img} source={ item?.image} />
+              <Image style={styles.img} source={item?.image} />
             </View>
             <View style={{ padding: 10, flexDirection: "column" }}>
               <Text style={styles.tname}>{item?.name}</Text>
               <Text style={styles.ttipe}>{item?.type}</Text>
 
-              <View
-                style={{ flexDirection: "row", alignItems: "center", gap: 3 }}
-              >
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 3 }}>
                 <Ionicons name="time" size={24} color="green" />
                 <Text>{item?.time} mins</Text>
               </View>
@@ -160,33 +145,32 @@ const [data,setData] = useState([]);
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {items?.map((item, index) => (
           <View key={index} style={styles.vcatg}>
-            <Image
-              style={{ width: 50, height: 50 }}
-              source={ item?.image }
-            />
-
+            <Image style={{ width: 50, height: 50 }} source={item?.image} />
             <Text style={styles.tname2}>{item?.name}</Text>
-
-            <Text style={styles.tdescription}> {item?.description}</Text>
+            <Text style={styles.tdescription}>{item?.description}</Text>
           </View>
         ))}
       </ScrollView>
+
       <Text style={styles.tall}>למעבר לתפריט</Text>
 
-<View style={{ marginHorizontal: 8 }}>
-  {itemToRender?.map((item, index) => (
-    <Catmenu key={index} item={item} />
-  ))}
-</View>
-<View style={{marginHorizontal:1}}>
-            {data?.map((item,index) => (
-                <menu key={index} item={item} firstimpress={item?.firstimpress}/>
-            ))}
+      <View style={{ marginHorizontal: 8 }}>
+        {itemToRender?.map((item, index) => (
+          <Catmenu key={index} item={item} />
+        ))}
+      </View>
+
+      <View style={{ marginHorizontal: 1 }}>
+        {data?.map((item, index) => (
+          <Menu key={index} item={item} firstimpress={item?.firstimpress} />
+        ))}
       </View>
     </ScrollView>
   );
 };
-export default index;
+
+export default Index;
+
 const styles = StyleSheet.create({
   cont: {
     flex: 1,
@@ -197,6 +181,20 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     gap: 2,
     padding: 10,
+  },
+  logoutButton: {
+    position: "absolute",
+    top: 10,
+    left: 10,
+    backgroundColor: "#fff",
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "#000",
+  },
+  logoutText: {
+    fontWeight: "bold",
   },
   p1: {
     backgroundColor: "#6CB4EE",
@@ -270,5 +268,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "gray",
     marginTop: 3,
+  },
+  tall: {
+    textAlign: "center",
+    marginTop: 20,
+    color: "gray",
   },
 });
