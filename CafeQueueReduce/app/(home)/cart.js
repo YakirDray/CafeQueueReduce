@@ -8,7 +8,7 @@ import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import index from "./index";
+import fechData from "../(home)/index"
 const cart = () => {
   const params = useLocalSearchParams();
   const router = useRouter();
@@ -22,7 +22,7 @@ const cart = () => {
     ?.map((item) => item.quantity * item.price)
     .reduce((curr, prev) => curr + prev, 0);
   console.log(cart);
- 
+  fechData(cart.cart);
   return (
     <>
       <ScrollView style={{ padding: 10, flex: 1, backgroundColor: "#F0F8FF" }}>
@@ -88,6 +88,7 @@ const cart = () => {
                   <Pressable
                     onPress={() => {
                       dispatch(decrementQuantity(item));
+                     
                     }}
                   >
                     <Text
@@ -118,6 +119,7 @@ const cart = () => {
                   <Pressable
                     onPress={() => {
                       dispatch(incrementQuantity(item));
+                      
                     }}
                   >
                     <Text
@@ -395,6 +397,7 @@ const cart = () => {
 
           <Pressable
             onPress={() => {
+             
               dispatch(cleanCart());
               router.replace({
                 pathname: "/order",

@@ -1,5 +1,4 @@
 import {
-  
   StyleSheet,
   Text,
   View,
@@ -16,7 +15,7 @@ import Categories from "../../Components/categories";
 import Catmenu from "../../Components/Catmenu";
 import { useSelector } from "react-redux";
 import { supabase } from "../../Supabase";
-import menu from "./menu";
+import cart from "./cart";
 
 const recommended = [
   {
@@ -35,7 +34,7 @@ const recommended = [
     type: "",
   },
 ];
-const items = [ 
+const items = [
   {
     id: "1",
     name: "סוגיי הקפה שלנו",
@@ -76,32 +75,31 @@ const firstimpress = [
 ];
 
 const index = () => {
-
   const cart = useSelector((state) => state.cart);
   const [data, setData] = useState([]);
+  const email=email;
   console.log(data);
- 
-  
-  useEffect(() => {     
-    async function fetchData() {  
-      try { 
-        const { data, error } = (await supabase.from("orders").insert(cart));
+
+  useEffect(() => {
+    fetchData(cart);
+    async function fetchData() {
+      try {
+        const { data, error } = await supabase.from("orderss").insert(cart);
+        
         if (error) {
           console.error("Error fetching data:", error);
         } else {
           setData(cart);
-          console.log("SUPA_WORKING", data);
+          console.log("SUPA_WORKING",data);
+          
         }
-      } catch (error) { 
-        console.error("Error in fetchData:", error); 
+      } catch (error) {
+        console.error("Error in fetchData:", error);
       }
     }
-  
-    fetchData(data.cart); 
+    console.log("SUPA_WORKING", data);
+    setData(cart);
   }, []);
-
-   
-  
 
   return (
     <ScrollView style={styles.cont}>
@@ -122,13 +120,12 @@ const index = () => {
       <View style={styles.v2}>
         <TextInput
           placeholder="Welcome to the cafeteria of Sami Shamoon College"
-          
           style={{ flex: 1 }}
         />
         <AntDesign name="search1" size={24} color="blue" />
       </View>
       <Carousel />
-      <Categories /> 
+      <Categories />
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {recommended?.map((item) => (
@@ -146,7 +143,7 @@ const index = () => {
                 <Ionicons name="time" size={24} color="green" />
                 <Text>{item?.time} mins</Text>
               </View>
-            </View> 
+            </View>
           </View>
         ))}
       </ScrollView>
@@ -168,11 +165,9 @@ const index = () => {
 
       <View style={{ marginHorizontal: 8 }}>
         {firstimpress?.map((item, index) => (
-          <Catmenu key={index} item={item}  />
-          
+          <Catmenu key={index} item={item} />
         ))}
       </View>
-    
     </ScrollView>
   );
 };

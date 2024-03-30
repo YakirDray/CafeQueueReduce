@@ -383,6 +383,7 @@ const menu = ({}) => {
   const router = useRouter();
   const cart = useSelector((state) => state.cart.cart);
   console.log(cart);
+
   const dispatch = useDispatch();
 
   const renderItem = ({ item }) => (

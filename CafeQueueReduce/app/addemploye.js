@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+/*import React, { useState } from 'react';
 import { View, Button, Image, Text, ScrollView, Modal, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 // לא לגעת יש לי מה להשלים פה!!
 
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: 'black', 
     borderRadius: 5,
     padding: 10,
     marginBottom: 10
@@ -72,4 +72,4 @@ const styles = StyleSheet.create({
   }
 });
 
-  
+  */
