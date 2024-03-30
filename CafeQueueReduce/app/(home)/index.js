@@ -112,7 +112,7 @@ const Index = () => {
     <ScrollView style={styles.container}>
       <TouchableOpacity
         onPress={handleLogout}
-        //style={styles.logoutButton}
+        style={styles.logoutButton}
         onPressIn={() => setIsPressed(true)}
        // onPressOut={() => setIsPressed(false)}
       >
@@ -197,16 +197,16 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   logoutButton: {
-    position: "absolute",
-    top: 10,
-    right: 10,
     backgroundColor: "#fff",
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 5,
     borderWidth: 1,
     borderColor: "#000",
-  },
+    alignSelf: "flex-end",
+    
+},
+
   logoutText: {
     fontWeight: "bold",
   },
