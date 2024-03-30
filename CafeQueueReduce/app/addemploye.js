@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, Button, Image, Text, ScrollView, Modal, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-// לא לגעת יש לי מה להשלים פה!!
 
 const logoImg = require("./assets/adaptive-icon.png");
 
@@ -12,7 +11,7 @@ export default function App() {
     department: '',
     salary: ''
   });
-  
+
   const handleSaveEmployee = () => {
     // עדכון פרטי העובד כאן עם המשתנה employeeData
     console.log("Saved employee data:", employeeData);
@@ -25,6 +24,7 @@ export default function App() {
         <Button title='להוספת כרטיס עובד חדש:' onPress={() => setIsModalVisible(true)} color="green" />
         <Image source={logoImg} style={{ flex: 1 }} />
       </ScrollView>
+
       
       <Modal visible={isModalVisible} onRequestClose={() => setIsModalVisible(false)} animationType="slide" presentationStyle="pageSheet">
         <View style={{ flex: 1, backgroundColor: "white", padding: 20 }}>
@@ -49,16 +49,23 @@ export default function App() {
             value={employeeData.department}
             onChangeText={text => setEmployeeData({ ...employeeData, department: text })}
           />
+          <TextInput
+            placeholder="משכורת"
+            style={styles.input}
+            value={employeeData.salary}
+            onChangeText={text => setEmployeeData({ ...employeeData, salary: text })}
+          />
 
-
+          {/* כפתור לשמירת העובד */}
+          <TouchableOpacity onPress={handleSaveEmployee} style={styles.button}>
+            <Text style={{ color: 'white' }}>שמור פרטי עובד</Text>
+          </TouchableOpacity>
         </View>
       </Modal>
     </View>
-
-
-        
   );
 }
+
 const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 24,
