@@ -1,17 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, SafeAreaView, KeyboardAvoidingView} from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, SafeAreaView, KeyboardAvoidingView,router} from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRouter } from "expo-router";
 
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
+
 
   const handleLogin = () => {
     // פונקציה להתחברות לעובד עם האימייל והסיסמה
     // למשל: fetch('/api/login', { method: 'POST', body: JSON.stringify({ email, password }) })
     // ואז טיפול בתוצאה וניווט למסך הבא
   };
+  // const handleRegularLogin = async () => {
+  //   try {
+  //     // מוחקים את הטוקן שמור באפליקציה (בדרך כלל השמירה המקומית של הטוקן)
+  //     await AsyncStorage.removeItem("authToken");
+  //     // מפנים את המשתמש לעמוד ההתחברות
+  //     router.replace("/login");
+  //   } catch (error) {
+  //     console.error("Error logging out:", error);
+  //   }
+  // };
 
   useEffect(() => {
     const checkLogin = async () => {
@@ -60,7 +73,12 @@ const Login = () => {
           <Button title="שכחתי סיסמא" onPress={() => console.log('Forgot password')} />
         </View>
       </KeyboardAvoidingView>
+      <View style={styles.buttonContainer}>
+        <Button title="התחבר כמשתמש רגיל"
+          onPress={() => router.replace("(authenticate)/login")} />
+      </View>
     </SafeAreaView>
+    
   );
 };
 
