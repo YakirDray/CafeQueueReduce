@@ -106,7 +106,7 @@ const login = () => {
         </Pressable>
         {/* כפתור התחברות למנהלים */}
         <Pressable
-          onPress={() => router.replace("/arrangement_table")} // החלף כתובת זו על פי הניתוב שלך
+          onPress={() => router.replace("/admin-login")} // החלף כתובת זו על פי הניתוב שלך
           style={{ marginTop: 15 }}
         >
           <Text style={styles.adminLogin}>התחברות למנהלים</Text>
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   },
   t_input: {
     color: "gray",
-    marginVertical: 10,
+    marginVertical: 10, 
     width: 300,
   },
   bottom_view: {

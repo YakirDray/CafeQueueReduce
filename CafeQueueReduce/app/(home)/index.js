@@ -1,4 +1,5 @@
 import {
+  Alert,
   StyleSheet,
   Text,
   View,
@@ -7,7 +8,7 @@ import {
   TextInput,
   Image,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React , {useState, useMemo,useEffect}from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import Carousel from "../../Components/Carousal";
@@ -15,8 +16,6 @@ import Categories from "../../Components/categories";
 import Catmenu from "../../Components/Catmenu";
 import { useSelector } from "react-redux";
 import { supabase } from "../../Supabase";
-
-
 const recommended = [
   {
     id: 0,
@@ -25,7 +24,7 @@ const recommended = [
     time: "35 - 45",
     type: "",
   },
-
+  
   {
     id: 1,
     name: "בוקר טוב",
@@ -34,6 +33,7 @@ const recommended = [
     type: "",
   },
 ];
+
 const items = [
   {
     id: "1",
@@ -53,18 +53,19 @@ const items = [
     name: "פיתות",
     description: "מבחר מאכלים בפיתה בליווי טחינה ותוספת",
     image: require("../../assets/sabich.webp"),
-
+   
     type: "",
   },
   {
-    id: 4,
-    name: "מתוקים",
-    description: "סוכריות גומי שוקולדים חטיפים חטיפי אנרגיה וכו.....",
-    image: require("../../assets/gummy.webp"),
-
-    type: "",
+  id: 4,
+  name: "מתוקים",
+  description: "סוכריות גומי שוקולדים חטיפים חטיפי אנרגיה וכו.....",
+  image: require("../../assets/gummy.webp"),
+  
+  type: "",
   },
 ];
+
 const firstimpress = [
   {
     id: "0",
@@ -73,13 +74,17 @@ const firstimpress = [
     image: require("../../assets/manu.webp"),
   },
 ];
-
 const index = () => {
-  const cart = useSelector((state) => state.cart);
-  const [data, setData] = useState([]);
-  const email=email;
-  console.log(data);
-
+const [filterQuery, setFilterQuery] = useState("");
+const [data,setData] = useState([]);
+  // מחשב מחדש את רשימת הפריטים להצגה בהתאם לשאילתת הסינון
+  const itemToRender = useMemo(() => {
+    
+    if (!filterQuery) return firstimpress;
+    return firstimpress.filter((item) => item.name.toLowerCase().includes(filterQuery.toLowerCase()));
+  }, [filterQuery, firstimpress]);
+  const cart =useSelector((state)=>state.cart)
+  console.log(cart)
   useEffect(() => {
     fetchData(cart);
     async function fetchData() {
@@ -101,45 +106,45 @@ const index = () => {
     
   }, []);
 
+
+  console.log("data",data)
   return (
-    <ScrollView style={styles.cont}>
-      <View style={styles.v1}>
+    <ScrollView style={styles.container}>
+      <TouchableOpacity
+        onPress={handleLogout}
+        style={styles.logoutButton}
+        onPressIn={() => setIsPressed(true)}
+       // onPressOut={() => setIsPressed(false)}
+      >
+        <Text style={styles.logoutText}>התנתקות</Text>
+      </TouchableOpacity>
+
+      <View style={styles.header}>
         <Ionicons name="restaurant-outline" size={24} color="#ffe4b5" />
         <View style={{ flex: 1 }}>
-          <Text style={{ fontSize: 15, fontWeight: "500" }}>
-            אפליקצית ההזמנות של קפיטריית סמי שמעון
-          </Text>
-          <Text style={{ color: "#E52850", fontSize: 16, marginTop: 3 }}>
-            הזמן מהר ולהרצאה לא תאחר
-          </Text>
+          <Text style={{ fontSize: 15, fontWeight: "200" }}>אפליקצית ההזמנות של קפיטריית סמי שמעון</Text>
+          <Text style={{ color: "#E52850", fontSize: 16, marginTop: 3 }}>הזמן מהר ולהרצאה לא תאחר</Text>
         </View>
-        <Pressable style={styles.p1}>
-          <Text>gruop 18</Text>
-        </Pressable>
       </View>
       <View style={styles.v2}>
-        <TextInput
-          placeholder="Welcome to the cafeteria of Sami Shamoon College"
-          style={{ flex: 1 }}
-        />
+        <TextInput placeholder="Welcome to the cafeteria of Sami Shamoon College" value={filterQuery}   onChangeText= { setFilterQuery}
+  style={{ flex: 1 }} />
         <AntDesign name="search1" size={24} color="blue" />
       </View>
-      <Carousel />
+      <Carousel/>
       <Categories />
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {recommended?.map((item) => (
+        {recommended?.map((item, index) => (
           <View style={styles.vrecom}>
             <View>
-              <Image style={styles.img} source={item?.image} />
+              <Image style={styles.img} source={ item?.image} />
             </View>
             <View style={{ padding: 10, flexDirection: "column" }}>
-              <Text style={styles.tname}>{item?.name}</Text>
-              <Text style={styles.ttipe}>{item?.type}</Text>
+              <Text style={styles.itemName}>{item?.name}</Text>
+              <Text style={styles.itemType}>{item?.type}</Text>
 
-              <View
-                style={{ flexDirection: "row", alignItems: "center", gap: 3 }}
-              >
+              <View style={{ flexDirection: "row", alignItems: "center", gap: 3 }}>
                 <Ionicons name="time" size={24} color="green" />
                 <Text>{item?.time} mins</Text>
               </View>
@@ -148,12 +153,15 @@ const index = () => {
         ))}
       </ScrollView>
 
-      <Text style={styles.texpl}>קטגוריות</Text>
+      <Text style={styles.categoriesText}>קטגוריות</Text>
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {items?.map((item, index) => (
           <View key={index} style={styles.vcatg}>
-            <Image style={{ width: 50, height: 50 }} source={item?.image} />
+            <Image
+              style={{ width: 50, height: 50 }}
+              source={ item?.image }
+            />
 
             <Text style={styles.tname2}>{item?.name}</Text>
 
@@ -161,23 +169,31 @@ const index = () => {
           </View>
         ))}
       </ScrollView>
-      <Text style={styles.tall}>למעבר לתפריט</Text>
 
-      <View style={{ marginHorizontal: 8 }}>
-        {firstimpress?.map((item, index) => (
-          <Catmenu key={index} item={item} />
-        ))}
+      <Text style={styles.toMenu}>למעבר לתפריט</Text>
+
+<View style={{ marginHorizontal: 8 }}>
+  {itemToRender?.map((item, index) => (
+    <Catmenu key={index} item={item} />
+  ))}
+</View>
+<View style={{marginHorizontal:1}}>
+            {data?.map((item,index) => (
+                <menu key={index} item={item} firstimpress={item?.firstimpress}/>
+            ))}
       </View>
     </ScrollView>
   );
 };
-export default index;
+
+export default Index;
+
 const styles = StyleSheet.create({
-  cont: {
+  container: {
     flex: 1,
     backgroundColor: "#fffff",
   },
-  v1: {
+  header: {
     flexDirection: "row",
     alignItems: "flex-start",
     gap: 2,
@@ -191,7 +207,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  v2: {
+  searchBar: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -203,37 +219,37 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginHorizontal: 10,
   },
-  vrecom: {
+  recommendedItem: {
     backgroundColor: "white",
     flexDirection: "row",
     margin: 2,
     borderRadius: 8,
   },
-  img: {
+  image: {
     width: 100,
     height: 100,
     resizeMode: "cover",
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 7,
   },
-  tname: {
+  itemName: {
     fontSize: 25,
     fontWeight: "500",
   },
-  ttipe: {
+  itemType: {
     flex: 1,
     marginTop: 3,
     color: "gray",
     fontWeight: "500",
   },
-  texpl: {
+  categoriesText: {
     textAlign: "center",
     marginTop: 7,
     letterSpacing: 4,
     marginBottom: 5,
     color: "gray",
   },
-  vcatg: {
+  categoryItem: {
     width: 90,
     borderColor: "#ffe4b5",
     borderWidth: 1,
@@ -246,14 +262,34 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "white",
   },
-  tname2: {
-    fontSize: 13,
-    fontWeight: "500",
-    marginTop: 6,
-  },
-  tdescription: {
+  itemDescription: {
     fontSize: 12,
     color: "gray",
     marginTop: 3,
   },
+  toMenu: {
+    textAlign: "center",
+    marginTop: 20,
+    color: "gray",
+  },
+  pressed: {
+    backgroundColor: "grey",
+    borderWidth: 2,
+    borderColor: "black",
+  },
+  pressedAnimation: {
+    transform: [{ scale: 1.1 }], // הגדלת הכפתור
+  },
+  logoutButton: {
+    top: 10,
+    right: 10,
+    backgroundColor: "#fff",
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "#000",
+    alignSelf: "flex-end",
+    
+},
 });
