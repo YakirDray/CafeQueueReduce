@@ -1,21 +1,5 @@
-import {
-  Alert,
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Pressable,
-  TextInput,
-  Image,
-  TouchableOpacity,
-  handleLogout,
-  filterQuery,
-  setFilterQuery,
-  itemToRender,
-
-
-} from "react-native";
-import React , {useState,useMemo,useEffect}from "react";
+import React, { useState, useMemo, useEffect } from "react";
+import { ScrollView, StyleSheet, Text, View, TouchableOpacity, TextInput, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import Carousel from "../../Components/Carousal";
@@ -23,6 +7,9 @@ import Categories from "../../Components/categories";
 import Catmenu from "../../Components/Catmenu";
 import { useSelector } from "react-redux";
 import { supabase } from "../../Supabase";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRouter } from "expo-router";
+
 const recommended = [
   {
     id: 0,
@@ -31,7 +18,6 @@ const recommended = [
     time: "35 - 45",
     type: "",
   },
-  
   {
     id: 1,
     name: "בוקר טוב",
@@ -60,16 +46,14 @@ const items = [
     name: "פיתות",
     description: "מבחר מאכלים בפיתה בליווי טחינה ותוספת",
     image: require("../../assets/sabich.webp"),
-   
     type: "",
   },
   {
-  id: 4,
-  name: "מתוקים",
-  description: "סוכריות גומי שוקולדים חטיפים חטיפי אנרגיה וכו.....",
-  image: require("../../assets/gummy.webp"),
-  
-  type: "",
+    id: 4,
+    name: "מתוקים",
+    description: "סוכריות גומי שוקולדים חטיפים חטיפי אנרגיה וכו.....",
+    image: require("../../assets/gummy.webp"),
+    type: "",
   },
 ];
 
@@ -78,46 +62,52 @@ const firstimpress = [
     id: "0",
     name: "הזמנה מוקדמת",
     description: "הנחות מרשימות למזמינים מראש",
-    image: require("../../assets/manu.webp"),
+    image: require("../../assets/steak.webp"),
   },
 ];
-const index = () => {
-  const cart = useSelector((state) => state.cart);
-  const [data, setData] = useState([]);
-  const email=email;
-  console.log(data);
 
+const Index = () => {
+  const [filterQuery, setFilterQuery] = useState("");
+  const [data, setData] = useState([]);
+  const cart = useSelector((state) => state.cart);
+  const [isPressed, setIsPressed] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
-    fetchData(cart);
     async function fetchData() {
       try {
-        
-        const { data, error } = await supabase.from("orderss").insert([
-          {
-           "name":"name",
-           "email": "email",
-            cart: cart,
-          }
-        ]);
-        
+        const { data, error } = await supabase.from("menu").select("*");
+        console.log("Data:", data);
         if (error) {
           console.error("Error fetching data:", error);
         } else {
-          setData(cart);
-          console.log("SUPA_WORKING",data);
-          
+          setData(data);
         }
       } catch (error) {
         console.error("Error in fetchData:", error);
       }
     }
-    console.log("SUPA_WORKING", email);
-    
+
+    fetchData();
   }, []);
 
+  // כתיבת הפונקציה של התנתקות והקישור לעמוד התחברות
+  const handleLogout = async () => {
+    try {
+      // מוחקים את הטוקן שמור באפליקציה (בדרך כלל השמירה המקומית של הטוקן)
+      await AsyncStorage.removeItem("authToken");
+      // מפנים את המשתמש לעמוד ההתחברות
+      router.replace("/login");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
 
-  console.log("data",data)
+  const itemToRender = useMemo(() => {
+    if (!filterQuery) return firstimpress;
+    return firstimpress.filter((item) => item.name.toLowerCase().includes(filterQuery.toLowerCase()));
+  }, [filterQuery, firstimpress]);
+
   return (
     <ScrollView style={styles.container}>
       <TouchableOpacity
@@ -136,19 +126,20 @@ const index = () => {
           <Text style={{ color: "#E52850", fontSize: 16, marginTop: 3 }}>הזמן מהר ולהרצאה לא תאחר</Text>
         </View>
       </View>
-      <View style={styles.v2}>
-        <TextInput placeholder="Welcome to the cafeteria of Sami Shamoon College" value={filterQuery}   onChangeText= { setFilterQuery}
-  style={{ flex: 1 }} />
+
+      <View style={styles.searchBar}>
+        <TextInput placeholder="Welcome to the cafeteria of Sami Shamoon College" value={filterQuery} onChangeText={setFilterQuery} style={{ flex: 1 }} />
         <AntDesign name="search1" size={24} color="blue" />
       </View>
-      <Carousel/>
+
+      <Carousel />
       <Categories />
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {recommended?.map((item, index) => (
-          <View style={styles.vrecom}>
+          <View style={styles.recommendedItem} key={index}>
             <View>
-              <Image style={styles.img} source={ item?.image} />
+              <Image style={styles.image} source={item?.image} />
             </View>
             <View style={{ padding: 10, flexDirection: "column" }}>
               <Text style={styles.itemName}>{item?.name}</Text>
@@ -167,36 +158,32 @@ const index = () => {
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {items?.map((item, index) => (
-          <View key={index} style={styles.vcatg}>
-            <Image
-              style={{ width: 50, height: 50 }}
-              source={ item?.image }
-            />
-
-            <Text style={styles.tname2}>{item?.name}</Text>
-
-            <Text style={styles.tdescription}> {item?.description}</Text>
+          <View key={index} style={styles.categoryItem}>
+            <Image style={{ width: 50, height: 50 }} source={item?.image} />
+            <Text style={styles.itemName}>{item?.name}</Text>
+            <Text style={styles.itemDescription}>{item?.description}</Text>
           </View>
         ))}
       </ScrollView>
 
       <Text style={styles.toMenu}>למעבר לתפריט</Text>
 
-<View style={{ marginHorizontal: 8 }}>
-  {itemToRender?.map((item, index) => (
-    <Catmenu key={index} item={item} />
-  ))}
-</View>
-<View style={{marginHorizontal:1}}>
-            {data?.map((item,index) => (
-                <menu key={index} item={item} firstimpress={item?.firstimpress}/>
-            ))}
+      <View style={{ marginHorizontal: 8 }}>
+        {itemToRender?.map((item, index) => (
+          <Catmenu key={index} item={item} />
+        ))}
+      </View>
+
+      <View style={{ marginHorizontal: 1 }}>
+        {data?.map((item, index) => (
+          <Menu key={index} item={item} firstimpress={item?.firstimpress} />
+        ))}
       </View>
     </ScrollView>
   );
 };
 
-export default index;
+export default Index;
 
 const styles = StyleSheet.create({
   container: {
