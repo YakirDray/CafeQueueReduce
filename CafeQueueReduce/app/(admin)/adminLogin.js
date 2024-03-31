@@ -15,16 +15,7 @@ const Login = () => {
     // למשל: fetch('/api/login', { method: 'POST', body: JSON.stringify({ email, password }) })
     // ואז טיפול בתוצאה וניווט למסך הבא
   };
-  // const handleRegularLogin = async () => {
-  //   try {
-  //     // מוחקים את הטוקן שמור באפליקציה (בדרך כלל השמירה המקומית של הטוקן)
-  //     await AsyncStorage.removeItem("authToken");
-  //     // מפנים את המשתמש לעמוד ההתחברות
-  //     router.replace("/login");
-  //   } catch (error) {
-  //     console.error("Error logging out:", error);
-  //   }
-  // };
+ 
 
   useEffect(() => {
     const checkLogin = async () => {
@@ -77,6 +68,11 @@ const Login = () => {
         <Button title="התחבר כמשתמש רגיל"
           onPress={() => router.replace("(authenticate)/login")} />
       </View>
+      <View style={styles.buttonContainer}>
+        <Button title="משתמש חדש? לחץ להרשמה"
+          onPress={() => router.replace("(authenticate)/register")} />
+      </View>
+        
     </SafeAreaView>
     
   );
