@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { ScrollView, StyleSheet, Text, View, TouchableOpacity, TextInput, Image } from "react-native";
+import { ScrollView, StyleSheet, Text, View, TouchableOpacity, TextInput, Image,Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import Carousel from "../../Components/Carousal";
@@ -93,14 +93,31 @@ const Index = () => {
 
   // כתיבת הפונקציה של התנתקות והקישור לעמוד התחברות
   const handleLogout = async () => {
-    try {
-      // מוחקים את הטוקן שמור באפליקציה (בדרך כלל השמירה המקומית של הטוקן)
-      await AsyncStorage.removeItem("authToken");
-      // מפנים את המשתמש לעמוד ההתחברות
-      router.replace("/login");
-    } catch (error) {
-      console.error("Error logging out:", error);
-    }
+    // Display an alert to confirm logout
+    Alert.alert(
+      'התנתקות',
+      'האם אתה בטוח שברצונך להתנתק מהחשבון שלך?',
+      [
+        {
+          text: 'ביטול',
+          style: 'cancel',
+        },
+        {
+          text: 'כן',
+          onPress: async () => {
+            try {
+              // מוחקים את הטוקן שמור באפליקציה (בדרך כלל השמירה המקומית של הטוקן)
+              await AsyncStorage.removeItem("authToken");
+              // מפנים את המשתמש לעמוד ההתחברות
+              router.replace("/login");
+            } catch (error) {
+              console.error("Error logging out:", error);
+            }
+          },
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   const itemToRender = useMemo(() => {
