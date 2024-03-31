@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, SafeAreaView, KeyboardAvoidingView } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, SafeAreaView, KeyboardAvoidingView,router} from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRouter } from "expo-router";
 
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
+
 
   const handleLogin = () => {
     // פונקציה להתחברות לעובד עם האימייל והסיסמה
     // למשל: fetch('/api/login', { method: 'POST', body: JSON.stringify({ email, password }) })
     // ואז טיפול בתוצאה וניווט למסך הבא
   };
+ 
 
   useEffect(() => {
     const checkLogin = async () => {
@@ -60,7 +64,17 @@ const Login = () => {
           <Button title="שכחתי סיסמא" onPress={() => console.log('Forgot password')} />
         </View>
       </KeyboardAvoidingView>
+      <View style={styles.buttonContainer}>
+        <Button title="התחבר כמשתמש רגיל"
+          onPress={() => router.replace("(authenticate)/login")} />
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button title="משתמש חדש? לחץ להרשמה"
+          onPress={() => router.replace("(authenticate)/register")} />
+      </View>
+        
     </SafeAreaView>
+    
   );
 };
 
