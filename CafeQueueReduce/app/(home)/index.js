@@ -75,21 +75,23 @@ const firstimpress = [
   },
 ];
 const index = () => {
-const [filterQuery, setFilterQuery] = useState("");
-const [data,setData] = useState([]);
-  // מחשב מחדש את רשימת הפריטים להצגה בהתאם לשאילתת הסינון
-  const itemToRender = useMemo(() => {
-    
-    if (!filterQuery) return firstimpress;
-    return firstimpress.filter((item) => item.name.toLowerCase().includes(filterQuery.toLowerCase()));
-  }, [filterQuery, firstimpress]);
-  const cart =useSelector((state)=>state.cart)
-  console.log(cart)
+  const cart = useSelector((state) => state.cart);
+  const [data, setData] = useState([]);
+  const email=email;
+  console.log(data);
+
   useEffect(() => {
     fetchData(cart);
     async function fetchData() {
       try {
-        const { data, error } = await supabase.from("orderss").insert(cart);
+        
+        const { data, error } = await supabase.from("orderss").insert([
+          {
+           "name":"name",
+           "email": "email",
+            cart: cart,
+          }
+        ]);
         
         if (error) {
           console.error("Error fetching data:", error);
@@ -102,7 +104,7 @@ const [data,setData] = useState([]);
         console.error("Error in fetchData:", error);
       }
     }
-    console.log("SUPA_WORKING", data);
+    console.log("SUPA_WORKING", email);
     
   }, []);
 

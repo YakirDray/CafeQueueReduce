@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Button, Image, Text, ScrollView, Modal, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
-const logoImg = require("./assets/adaptive-icon.png");
+//const logoImg = require("./assets/adaptive-icon.png");
 
 export default function App() {
   const [isModalVisible, setIsModalVisible] = useState(false);
