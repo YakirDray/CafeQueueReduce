@@ -10,7 +10,7 @@
 //     // למשל: fetch('/api/login', { method: 'POST', body: JSON.stringify({ email, password }) })
 //     // ואז טיפול בתוצאה וניווט למסך הבא
 //   };
-
+ 
 //   useEffect(() => {
 //     const checkLogin = async () => {
 //       try {
