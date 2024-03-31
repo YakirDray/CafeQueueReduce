@@ -1,12 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  TextInput,
-  Pressable,
-} from "react-native";
+import {StyleSheet, Text, View, SafeAreaView, KeyboardAvoidingView, TextInput, Pressable,} from "react-native";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import { Entypo } from "@expo/vector-icons";
