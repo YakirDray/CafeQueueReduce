@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
   },
   t_input: {
     color: "gray",
-    marginVertical: 10,
+    marginVertical: 10, 
     width: 300,
   },
   bottom_view: {
