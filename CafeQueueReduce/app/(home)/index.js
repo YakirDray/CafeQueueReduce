@@ -75,16 +75,25 @@ const firstimpress = [
 ];
 
 const index = () => {
+  
   const cart = useSelector((state) => state.cart);
+  const email = useSelector((state) => state.email);
   const [data, setData] = useState([]);
-  const email=email;
+  
   console.log(data);
 
   useEffect(() => {
     fetchData(cart);
     async function fetchData() {
       try {
-        const { data, error } = await supabase.from("orderss").insert(cart);
+        
+        const { data, error } = await supabase.from("orderss").insert([
+          {
+           "name":"name",
+           "email": "email",
+            cart: cart,
+          }
+        ]);
         
         if (error) {
           console.error("Error fetching data:", error);
@@ -97,7 +106,7 @@ const index = () => {
         console.error("Error in fetchData:", error);
       }
     }
-    console.log("SUPA_WORKING", data);
+    console.log("SUPA_WORKING", email);
     
   }, []);
 
