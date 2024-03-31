@@ -7,8 +7,15 @@ import {
   Pressable,
   TextInput,
   Image,
+  TouchableOpacity,
+  handleLogout,
+  filterQuery,
+  setFilterQuery,
+  itemToRender,
+
+
 } from "react-native";
-import React , {useState, useMemo,useEffect}from "react";
+import React , {useState,useMemo,useEffect}from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import Carousel from "../../Components/Carousal";
@@ -79,6 +86,7 @@ const index = () => {
   const [data, setData] = useState([]);
   const email=email;
   console.log(data);
+
 
   useEffect(() => {
     fetchData(cart);
@@ -188,7 +196,7 @@ const index = () => {
   );
 };
 
-export default Index;
+export default index;
 
 const styles = StyleSheet.create({
   container: {
