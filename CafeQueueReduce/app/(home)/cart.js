@@ -3,26 +3,30 @@ import React from "react";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
-import { cleanCart, decrementQuantity, incrementQuantity } from "../../Redux/Cart";
+import {
+  cleanCart,
+  decrementQuantity,
+  incrementQuantity,
+} from "../../Redux/Cart";
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import fechData from "../(home)/index"
+import fechData from "../(home)/index";
 const cart = () => {
   const params = useLocalSearchParams();
   const router = useRouter();
   const cart = useSelector((state) => state.cart.cart);
+
   const dispatch = useDispatch();
-  const instructions = [
-    { id: 1, name: "עד הכיתה", iconName: "door-open" },
-   
-  ];
+  const instructions = [{ id: 1, name: "עד הכיתה", iconName: "door-open" }];
   const total = cart
     ?.map((item) => item.quantity * item.price)
     .reduce((curr, prev) => curr + prev, 0);
   console.log(cart);
   fechData(cart.cart);
+ 
+  
   return (
     <>
       <ScrollView style={{ padding: 10, flex: 1, backgroundColor: "#F0F8FF" }}>
@@ -88,7 +92,6 @@ const cart = () => {
                   <Pressable
                     onPress={() => {
                       dispatch(decrementQuantity(item));
-                     
                     }}
                   >
                     <Text
@@ -119,7 +122,6 @@ const cart = () => {
                   <Pressable
                     onPress={() => {
                       dispatch(incrementQuantity(item));
-                      
                     }}
                   >
                     <Text
@@ -144,7 +146,7 @@ const cart = () => {
                 }}
               >
                 <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-                ₪ {item.price * item.quantity}
+                  ₪ {item.price * item.quantity}
                 </Text>
                 <Text style={{ fontSize: 15, fontWeight: "500" }}>
                   Quantity : {item?.quantity}
@@ -160,7 +162,7 @@ const cart = () => {
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               {instructions?.map((item) => (
                 <Pressable
-                key={item.id}
+                  key={item.id}
                   style={{
                     margin: 10,
                     borderRadius: 10,
@@ -282,9 +284,7 @@ const cart = () => {
                   marginTop: 10,
                 }}
               >
-                <Text style={{ color: "gray" }}>
-                  ya
-                </Text>
+                <Text style={{ color: "gray" }}>ya</Text>
                 <Text>Rs 3</Text>
               </View>
             </View>
@@ -330,14 +330,10 @@ const cart = () => {
               >
                 <Text
                   style={{ fontSize: 15, fontWeight: "400", color: "#505050" }}
-                >
-                 
-                </Text>
+                ></Text>
                 <Text
                   style={{ fontSize: 15, fontWeight: "400", color: "#505050" }}
-                >
-                  
-                </Text>
+                ></Text>
               </View>
               <View
                 style={{
@@ -348,9 +344,7 @@ const cart = () => {
               >
                 <Text
                   style={{ fontSize: 15, fontWeight: "400", color: "#505050" }}
-                >
-              
-                </Text>
+                ></Text>
                 <Text
                   style={{ fontSize: 15, fontWeight: "400", color: "#505050" }}
                 >
@@ -380,6 +374,8 @@ const cart = () => {
 
       {total === 0 ? null : (
         <Pressable
+    
+      
           style={{
             flexDirection: "row",
             alignItems: "center",
@@ -397,15 +393,13 @@ const cart = () => {
 
           <Pressable
             onPress={() => {
-             
               dispatch(cleanCart());
               router.replace({
                 pathname: "/order",
                 params: {
-                 name: params?.name,
-                 total: params?.total,
-                 cart:params?.cart,
-                 
+                  name: params?.name,
+                  total: params?.total,
+                  cart: params?.cart,
                 },
               });
             }}
@@ -424,6 +418,7 @@ const cart = () => {
               <Text
                 style={{ color: "white", fontSize: 15, fontWeight: "bold" }}
               >
+                
                 {total}
               </Text>
               <Text

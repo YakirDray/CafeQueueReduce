@@ -12,7 +12,10 @@ import moment from 'moment-timezone';
 import MapView, { Marker, Polyline } from "react-native-maps";
 import {  FontAwesome5 } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import fechData from "../(home)/index";
 const order = () => {
+
+fechData(params?.total)
   const router = useRouter();
   const params = useLocalSearchParams();
   const [tip, setTip] = useState(0);
