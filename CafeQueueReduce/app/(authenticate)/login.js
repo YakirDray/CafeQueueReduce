@@ -103,6 +103,12 @@ const login = () => {
         >
           <Text style={styles.adminLogin}>התחברות למנהלים</Text>
         </Pressable>
+        <Pressable
+          onPress={() => router.replace("/(employee)/loginemplye")} // צריך לסדר את הכתובת!
+          style={{ marginTop: 15 }}
+        >
+          <Text style={styles.adminLogin}>התחברות לעובדים</Text>
+        </Pressable>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
