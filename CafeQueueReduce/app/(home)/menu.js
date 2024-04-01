@@ -428,7 +428,7 @@ const menu = ({}) => {
             })
           }
         >
-          <Text style={{ fontSize: 25 }}>Cart</Text>
+          <Text style={{ fontSize: 35,color:"red" }}>Cart</Text>
         </Pressable>
       </View>
     </View>
@@ -507,5 +507,6 @@ const styles = StyleSheet.create({
   },
   t: {
     fontSize: 20,
+    color:"red",
   },
 });
