@@ -1,5 +1,5 @@
-import React, { useState, useMemo, useEffect } from "react";
-import { ScrollView, StyleSheet, Text, View, TouchableOpacity, TextInput, Image,Alert } from "react-native";
+import React, { useState, useEffect } from "react";
+import { ScrollView, StyleSheet, Text, View, TouchableOpacity,  Image,Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import Carousel from "../../Components/Carousal";
@@ -71,9 +71,11 @@ const Index = () => {
   const cart = useSelector((state) => state.cart);
   const [isPressed, setIsPressed] = useState(false);
   const router = useRouter();
-
+  //const total =useSelector((state) => state.total);
   useEffect(() => {
+   
     async function fetchData() {
+      
       try {
         
         const { data, error } = await supabase.from("orders_sami").insert([
@@ -81,14 +83,13 @@ const Index = () => {
            name:"Yakir-Dray",
            email: "Yakir@sce.com",
            cart: cart,
-         
           }
         ]);
         
         if (error) {
           console.error("Error fetching data:", error);
         } else {
-          setData(data);
+          setData(data); 
         }
       } catch (error) {
         console.error("Error in fetchData:", error);

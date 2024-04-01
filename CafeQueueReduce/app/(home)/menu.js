@@ -461,7 +461,7 @@ const menu = ({}) => {
     <AntDesign name="search1" size={24} color="blue" />
       </View>
    <FlatList
-    data={itemToRender} // שינוי מ-Menuitems ל-itemToRender
+    data={itemToRender}
     renderItem={renderCategory}
     keyExtractor={(item) => item.category}
   />
