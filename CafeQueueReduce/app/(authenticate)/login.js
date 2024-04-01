@@ -9,7 +9,6 @@ import Dialog from 'react-native-dialog';
 const login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
   const [dialogVisible, setDialogVisible] = useState(false);
   const [userInput, setUserInput] = useState('');
   const router = useRouter();
