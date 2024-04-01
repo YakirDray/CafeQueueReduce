@@ -7,14 +7,12 @@ import {
   ScrollView,
   FlatList,
   Pressable,
-  TextInput,
 } from "react-native";
-import { useState,useMemo } from "react";
 import { addToCart } from "../../Redux/Cart";
 import { useDispatch } from "react-redux";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useSelector } from "react-redux";
-import { AntDesign } from "@expo/vector-icons";
+
 const Menuitems = [
   {
     category: "בצלחת",
@@ -28,7 +26,6 @@ const Menuitems = [
         description: "שניצל עוף פריך מוגש עם תוספת לבחירה",
         prepTime: "15 min",
         image: require("../../assets/schnitzel.webp"),
-        
       },
       {
         id: "2",
@@ -382,22 +379,10 @@ const Menuitems = [
   },
 ];
 const menu = ({}) => {
-  const [filterQuery, setFilterQuery] = useState("");
   const params = useLocalSearchParams();
   const router = useRouter();
   const cart = useSelector((state) => state.cart.cart);
   console.log(cart);
-  const itemToRender = useMemo(() => {
-    if (!filterQuery) {
-      return Menuitems;
-    }
-    return Menuitems.map(category => ({
-        ...category,
-        item: category.item.filter(item => 
-           item.name.toLowerCase().includes(filterQuery.toLowerCase()))
-    })).filter(category => category.item.length > 0); // הוספתי סינון שמשאיר רק קטגוריות עם פריטים
-}, [filterQuery, Menuitems]);
-
 
   const dispatch = useDispatch();
 
@@ -414,7 +399,6 @@ const menu = ({}) => {
           onPress={() => dispatch(addToCart(item))}
         >
           <Text style={styles.t}>Add to Cart</Text>
-         
         </Pressable>
       </View>
     </View>
@@ -430,9 +414,7 @@ const menu = ({}) => {
         horizontal={false}
       />
       <View>
-     
         <Pressable
-        
           onPress={() =>
             router.push({
               pathname: "/cart",
@@ -446,7 +428,7 @@ const menu = ({}) => {
             })
           }
         >
-          <Text style={{ fontSize: 35,color:"red" }}>Cart</Text>
+          <Text style={{ fontSize: 25 }}>Cart</Text>
         </Pressable>
       </View>
     </View>
@@ -454,19 +436,12 @@ const menu = ({}) => {
   
   return (
     <ScrollView style={styles.container}>
-      
-       <View 
-    style={styles.searchBar}>
-    <TextInput placeholder="Welcome to the cafeteria of Sami Shamoon College" value={filterQuery} onChangeText={setFilterQuery} style={{ flex: 1 }} />
-    <AntDesign name="search1" size={24} color="blue" />
-      </View>
-   <FlatList
-    data={itemToRender} // שינוי מ-Menuitems ל-itemToRender
-    renderItem={renderCategory}
-    keyExtractor={(item) => item.category}
-  />
-</ScrollView>
-
+      <FlatList
+        data={Menuitems}
+        renderItem={renderCategory}
+        keyExtractor={(item) => item.category}
+      />
+    </ScrollView>
   );
 };
 export default menu;
@@ -477,18 +452,6 @@ const styles = StyleSheet.create({
   },
   categoryContainer: {
     marginBottom: 20,
-  },
-  searchBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    borderWidth: 1,
-    borderColor: "#C0C0C0",
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    borderRadius: 11,
-    marginTop: 10,
-    marginHorizontal: 10,
   },
   categoryName: {
     fontSize: 24,
@@ -544,6 +507,5 @@ const styles = StyleSheet.create({
   },
   t: {
     fontSize: 20,
-    color:"red",
   },
 });

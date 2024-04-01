@@ -11,12 +11,8 @@ import { useLocalSearchParams } from "expo-router";
 import moment from 'moment-timezone';
 import MapView, { Marker, Polyline } from "react-native-maps";
 import {  FontAwesome5 } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
-import fechData from "../(home)/index";
-const order = () => {
 
-fechData(params?.total)
-  const router = useRouter();
+const order = () => {
   const params = useLocalSearchParams();
   const [tip, setTip] = useState(0);
   const timeInIsrael = moment().tz("Asia/Jerusalem").format("DD/MM/YYYY HH:mm:ss");
@@ -253,13 +249,6 @@ fechData(params?.total)
           </View>
         </View>
       </View>
-      <Pressable 
-      onPress={() => router.replace("/(home)") }><Text style={{fontSize:15,color:"red"}}>Thank you for the invitation, click to return to the homepage </Text></Pressable>
-      
-
-           
-     
-     
     </SafeAreaView>
   );
 };

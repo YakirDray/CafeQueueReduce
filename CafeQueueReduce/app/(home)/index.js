@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { ScrollView, StyleSheet, Text, View, TouchableOpacity, TextInput, Image,Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-
+import { AntDesign } from "@expo/vector-icons";
 import Carousel from "../../Components/Carousal";
 import Categories from "../../Components/categories";
 import Catmenu from "../../Components/Catmenu";
@@ -62,11 +62,12 @@ const firstimpress = [
     id: "0",
     name: "הזמנה מוקדמת",
     description: "הנחות מרשימות למזמינים מראש",
-    image: require("../../assets/manu.webp"),
+    image: require("../../assets/steak.webp"),
   },
 ];
 
 const Index = () => {
+  const [filterQuery, setFilterQuery] = useState("");
   const [data, setData] = useState([]);
   const cart = useSelector((state) => state.cart);
   const [isPressed, setIsPressed] = useState(false);
@@ -75,16 +76,8 @@ const Index = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        
-        const { data, error } = await supabase.from("orders_sami").insert([
-          {
-           name:"Yakir-Dray",
-           email: "Yakir@sce.com",
-           cart: cart,
-         
-          }
-        ]);
-        
+        const { data, error } = await supabase.from("menu").select("*");
+        console.log("Data:", data);
         if (error) {
           console.error("Error fetching data:", error);
         } else {
@@ -127,6 +120,10 @@ const Index = () => {
   };
 
 
+  const itemToRender = useMemo(() => {
+    if (!filterQuery) return firstimpress;
+    return firstimpress.filter((item) => item.name.toLowerCase().includes(filterQuery.toLowerCase()));
+  }, [filterQuery, firstimpress]);
 
   return (
     <ScrollView style={styles.container}>
@@ -147,7 +144,10 @@ const Index = () => {
         </View>
       </View>
 
-   
+      <View style={styles.searchBar}>
+        <TextInput placeholder="Welcome to the cafeteria of Sami Shamoon College" value={filterQuery} onChangeText={setFilterQuery} style={{ flex: 1 }} />
+        <AntDesign name="search1" size={24} color="blue" />
+      </View>
 
       <Carousel />
       <Categories />
@@ -183,15 +183,19 @@ const Index = () => {
         ))}
       </ScrollView>
 
-      <Text style={styles.toMenu}>למעבר לתפריט לחץ</Text>
+      <Text style={styles.toMenu}>למעבר לתפריט</Text>
 
       <View style={{ marginHorizontal: 8 }}>
-        {firstimpress?.map((item, index) => (
+        {itemToRender?.map((item, index) => (
           <Catmenu key={index} item={item} />
         ))}
       </View>
 
-     
+      <View style={{ marginHorizontal: 1 }}>
+        {data?.map((item, index) => (
+          <Menu key={index} item={item} firstimpress={item?.firstimpress} />
+        ))}
+      </View>
     </ScrollView>
   );
 };
@@ -280,9 +284,7 @@ const styles = StyleSheet.create({
   toMenu: {
     textAlign: "center",
     marginTop: 20,
-    color: "red",
-    fontSize:20,
-
+    color: "gray",
   },
   pressed: {
     backgroundColor: "grey",
