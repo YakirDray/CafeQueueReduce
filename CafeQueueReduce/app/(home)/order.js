@@ -15,7 +15,7 @@ import { useRouter } from "expo-router";
 import fechData from "../(home)/index";
 const order = () => {
 
-fechData(params?.total)
+
   const router = useRouter();
   const params = useLocalSearchParams();
   const [tip, setTip] = useState(0);

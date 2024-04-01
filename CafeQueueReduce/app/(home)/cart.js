@@ -24,9 +24,9 @@ const cart = () => {
     ?.map((item) => item.quantity * item.price)
     .reduce((curr, prev) => curr + prev, 0);
   console.log(cart);
-  fechData(cart.cart);
- 
   
+ const fech =fechData;
+ fech(cart)
   return (
     <>
       <ScrollView style={{ padding: 10, flex: 1, backgroundColor: "#F0F8FF" }}>
@@ -392,7 +392,9 @@ const cart = () => {
           </View>
 
           <Pressable
+         
             onPress={() => {
+             
               dispatch(cleanCart());
               router.replace({
                 pathname: "/order",

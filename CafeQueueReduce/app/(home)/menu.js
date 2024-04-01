@@ -386,6 +386,7 @@ const menu = ({}) => {
   const params = useLocalSearchParams();
   const router = useRouter();
   const cart = useSelector((state) => state.cart.cart);
+  
   console.log(cart);
   const itemToRender = useMemo(() => {
     if (!filterQuery) {
@@ -395,7 +396,7 @@ const menu = ({}) => {
         ...category,
         item: category.item.filter(item => 
            item.name.toLowerCase().includes(filterQuery.toLowerCase()))
-    })).filter(category => category.item.length > 0); // הוספתי סינון שמשאיר רק קטגוריות עם פריטים
+    })).filter(category => category.item.length > 0); 
 }, [filterQuery, Menuitems]);
 
 
@@ -410,11 +411,62 @@ const menu = ({}) => {
         <Text style={styles.itemPrice}>Price:{item.price}₪</Text>
         <Text style={styles.itemPrepTime}>Prep time: {item.prepTime}</Text>
         <Pressable
-          style={styles.addToCart}
-          onPress={() => dispatch(addToCart(item))}
+  style={({ pressed }) => [
+    {
+      backgroundColor: pressed ? '#ffce00' : '#f5a623', // Changes color when pressed
+      padding: 5,
+      borderRadius: 10,
+      elevation: pressed ? 2 : 5, // Changes elevation when pressed for a subtle shadow effect
+      shadowColor: '#000', // Shadow for iOS
+      shadowOffset: { width: 0, height: 2 },
+     
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      width:"90%",
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginHorizontal: 10, // Adjust based on your layout
+      marginTop: 10,
+    },
+  ]}
+  onPress={() => dispatch(addToCart(item))}
+>
+  <Text style={{ color: '#fff', fontWeight: 'bold' }}>Add to Cart</Text>
+</Pressable>
+
+        
+        <Pressable style={({ pressed }) => [
+    {
+      backgroundColor: pressed ? '#ffce00' : '#f5a623', // Changes color when pressed
+      padding: 5,
+      borderRadius: 10,
+      elevation: pressed ? 2 : 5, // Changes elevation when pressed for a subtle shadow effect
+      shadowColor: '#000', // Shadow for iOS
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      width:"90%",
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginHorizontal: 10, 
+      marginTop: 10,
+    },
+  ]}
+        
+          onPress={() =>
+            router.push({
+              pathname: "/cart",
+              params: {
+                name: item.name,
+                price: item.price,
+                rating: item.rating,
+                description:item.description,
+                
+              },
+            })
+          }
         >
-          <Text style={styles.t}>Add to Cart</Text>
-         
+          <Text style={{ fontSize: 25,color:"red" }}>Cart</Text>
         </Pressable>
       </View>
     </View>
@@ -431,23 +483,6 @@ const menu = ({}) => {
       />
       <View>
      
-        <Pressable
-        
-          onPress={() =>
-            router.push({
-              pathname: "/cart",
-              params: {
-                name: item.name,
-                price: item.price,
-                rating: item.rating,
-                description:item.description,
-                
-              },
-            })
-          }
-        >
-          <Text style={{ fontSize: 35,color:"red" }}>Cart</Text>
-        </Pressable>
       </View>
     </View>
   );
@@ -518,7 +553,7 @@ const styles = StyleSheet.create({
   },
   itemImage: {
     width: 100,
-    height: 100,
+    height: 180,
     borderRadius: 10,
     marginRight: 10,
   },

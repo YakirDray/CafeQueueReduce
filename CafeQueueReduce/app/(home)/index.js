@@ -183,11 +183,12 @@ const Index = () => {
         ))}
       </ScrollView>
 
-      <Text style={styles.toMenu}>למעבר לתפריט לחץ</Text>
 
       <View style={{ marginHorizontal: 8 }}>
         {firstimpress?.map((item, index) => (
+
           <Catmenu key={index} item={item} />
+          
         ))}
       </View>
 
