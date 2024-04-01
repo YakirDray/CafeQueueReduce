@@ -38,8 +38,7 @@ const login = () => {
     if (data) {
       const token = data?.session?.access_token;
       AsyncStorage.setItem("authToken", token);
-      
-     
+      console.log(data)
       router.replace("/(home)");
     }
   };
