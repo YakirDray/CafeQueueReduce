@@ -1,122 +1,180 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, SafeAreaView, KeyboardAvoidingView,router} from 'react-native';
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import {StyleSheet, Text, View, SafeAreaView, KeyboardAvoidingView, TextInput, Pressable,} from "react-native";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
+import { Entypo } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
+import { supabase } from "../../Supabase";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
-const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const loginemplye = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const router = useRouter();
 
-
-  const handleLogin = () => {
-    // פונקציה להתחברות לעובד עם האימייל והסיסמה
-    // למשל: fetch('/api/login', { method: 'POST', body: JSON.stringify({ email, password }) })
-    // ואז טיפול בתוצאה וניווט למסך הבא
-  };
- 
-
-  useEffect(() => {
-    const checkLogin = async () => {
-      try {
-        const token = await AsyncStorage.getItem("authToken");
+   useEffect(() => {
+     const checkLogin = async () => {
+     try {
+       const token = await AsyncStorage.getItem("authToken");
         if (token) {
-          router.replace("/home");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+         router.replace("/(home)");
+       }
+     } catch (error) {
+       console.log(error);
+     }
+     };
+
     checkLogin();
-  }, []);
+   }, []);
+
+  const signUpWithEmail = async () => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
+    if (error) {
+      console.error("Error signing up:", error.message);
+      return;
+    }
+    if (data) {
+      const token = data?.session?.access_token;
+      AsyncStorage.setItem("authToken", token);
+      
+     
+      router.replace("/(home)");
+    }
+  };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.first_view}>
       <View style={{ marginTop: 50 }}>
         <Text style={styles.f_title}>הקפיטריה של סמי שמעון</Text>
       </View>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>התחברות לעובדים</Text>
-      </View>
-      <KeyboardAvoidingView behavior="padding" style={styles.inputContainer}>
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.input}
-            value={email}
-            onChangeText={setEmail}
-            placeholder="הזן אימייל"
-          />
+      <KeyboardAvoidingView>
+        <View style={{ alignItems: "center" }}>
+          <Text style={styles.s_title}>התחבר</Text>
+          <Text style ={styles.f_title} > התחברות לעובדים</Text>
+
         </View>
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.input}
-            value={password}
-            onChangeText={setPassword}
-            placeholder="הזן סיסמה"
-            secureTextEntry
-          />
+        <View style={{ marginTop: 70 }}>
+          <View style={styles.input_view}>
+            <Entypo
+              style={{ marginLeft: 8 }}
+              name="email"
+              size={24}
+              color="gray"
+            />
+            <TextInput
+              value={email}
+              onChangeText={(text) => setEmail(text)}
+              style={styles.t_input}
+              placeholder="enter your Email"
+            />
+          </View>
+          <View style={styles.input_view}>
+            <Feather
+              style={{ marginLeft: 8 }}
+              name="unlock"
+              size={24}
+              color="black"
+            />
+            <TextInput
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+              style={styles.t_input}
+              placeholder="enter your password"
+            />
+          </View>
         </View>
-        <View style={styles.buttonContainer}>
-          <Button title="התחבר" onPress={handleLogin} />
+        <View style={styles.bottom_view}>
+          <Text>השאר אותי מחובר</Text>
+          <Text>שכחתי סיסמא</Text>
         </View>
-        <View style={styles.forgotPasswordContainer}>
-          <Button title="שכחתי סיסמא" onPress={() => console.log('Forgot password')} />
-        </View>
-      </KeyboardAvoidingView>
-      <View style={styles.buttonContainer}>
-        <Button title="התחבר כמשתמש רגיל"
-          onPress={() => router.replace("(authenticate)/login")} />
-      </View>
-      <View style={styles.buttonContainer}>
-        <Button title="משתמש חדש? לחץ להרשמה"
-          onPress={() => router.replace("(authenticate)/register")} />
-      </View>
+        <Pressable onPress={signUpWithEmail} style={styles.login}>
+          <Text style={styles.login_t}>login</Text>
+        </Pressable>
+        <Pressable
+          onPress={() => router.replace("/register")}
+          style={{ marginTop: 15 }}
+        >
+          <Text style={styles.register}>עובד חדש? לחץ להרשם</Text>
+        </Pressable>
+        {/* כפתור התחברות למנהלים */}
         
+        <Pressable
+          onPress={() => router.replace("/(authenticate)/login")} // צריך לסדר את הכתובת!
+          style={{ marginTop: 15 }}
+        >
+          <Text style={styles.adminLogin}>לקוח רגיל? התחבר כלקוח</Text>
+        </Pressable>
+      </KeyboardAvoidingView>
     </SafeAreaView>
-    
   );
 };
 
+export default loginemplye;
+
 const styles = StyleSheet.create({
-  container: {
+  first_view: {
     flex: 1,
-    backgroundColor: '#ffffff', // לבן
-    alignItems: 'center',
+    backgroundColor: "white",
+    alignItems: "center",
   },
-  titleContainer: {
-    marginTop: 50,
-    alignItems: 'center',
+  f_title: {
+    fontSize: 20,
+    textAlign: "center",
+    fontWeight: "bold",
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
+  s_title: {
+    fontSize: 17,
+    fontWeight: "bold",
+    marginTop: 12,
+    color: "red",
   },
-  inputContainer: {
-    width: '50%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-  },
-  inputView: {
-    width: '100%',
-    marginBottom: 20,
-  },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
+  input_view: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    backgroundColor: "#E0EEEE",
+    paddingVertical: 5,
     borderRadius: 5,
-    paddingHorizontal: 10,
+    marginTop: 30,
   },
-  buttonContainer: {
-    width: '100%',
-    marginBottom: 20,
+  t_input: {
+    color: "gray",
+    marginVertical: 10, 
+    width: 300,
   },
-  forgotPasswordContainer: {
-    width: '100%',
+  bottom_view: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 12,
   },
+  login: {
+    width: 200,
+    backgroundColor: "#EF9995",
+    borderRadius: 6,
+    marginLeft: "auto",
+    marginRight: "auto",
+    padding: 15,
+    marginTop: 50,
+  },
+  login_t: {
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 16,
+    color: "white",
+  },
+  register: {
+    textAlign: "center",
+    color: "gray",
+    fontSize: 25,
+  },
+  adminLogin: {
+    textAlign: "center",
+    color: "blue", // ניתן לשנות צבע כדי להתאים לעיצוב שלך
+    fontSize: 20,
+  },
+  
 });
 
-export default Login;
