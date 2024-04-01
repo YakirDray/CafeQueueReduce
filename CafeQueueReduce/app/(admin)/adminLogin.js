@@ -27,7 +27,7 @@ const adminLogin = () => {
       AsyncStorage.setItem("authToken", token);
       
      
-      router.replace("/(home)");
+      router.replace("/homeAdmin");
     }
   };
 
