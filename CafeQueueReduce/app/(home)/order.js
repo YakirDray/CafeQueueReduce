@@ -253,10 +253,11 @@ fechData(params?.total)
           </View>
         </View>
       </View>
+      <View>
       <Pressable 
       onPress={() => router.replace("/(home)") }><Text style={{fontSize:15,color:"red"}}>Thank you for the invitation, click to return to the homepage </Text></Pressable>
       
-
+      </View>
            
      
      
