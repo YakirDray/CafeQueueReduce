@@ -14,12 +14,9 @@ import { Entypo } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import fechData from "../(home)/index";
 const cart = () => {
-
-
   const params = useLocalSearchParams();
   const router = useRouter();
   const cart = useSelector((state) => state.cart.cart);
-
   const dispatch = useDispatch();
   const instructions = [{ id: 1, name: "עד הכיתה", iconName: "door-open" }];
   const total = cart
@@ -27,11 +24,8 @@ const cart = () => {
     .reduce((curr, prev) => curr + prev, 0);
   console.log(cart);
   fechData(cart.cart);
- 
-  
   return (
     <>
-    
       <ScrollView style={{ padding: 10, flex: 1, backgroundColor: "#F0F8FF" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
           <Ionicons name="arrow-back" size={24} color="black" />
@@ -444,5 +438,5 @@ const cart = () => {
     </>
   );
 };
-export default cart;
 
+export default cart;
