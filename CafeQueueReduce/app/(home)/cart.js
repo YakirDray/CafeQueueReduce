@@ -17,6 +17,7 @@ const cart = () => {
   const params = useLocalSearchParams();
   const router = useRouter();
   const cart = useSelector((state) => state.cart.cart);
+
   const dispatch = useDispatch();
   const instructions = [{ id: 1, name: "עד הכיתה", iconName: "door-open" }];
   const total = cart
@@ -24,6 +25,8 @@ const cart = () => {
     .reduce((curr, prev) => curr + prev, 0);
   console.log(cart);
   fechData(cart.cart);
+ 
+  
   return (
     <>
       <ScrollView style={{ padding: 10, flex: 1, backgroundColor: "#F0F8FF" }}>
