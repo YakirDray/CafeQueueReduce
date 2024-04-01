@@ -1,31 +1,21 @@
-import {StyleSheet, Text, View, SafeAreaView, KeyboardAvoidingView, TextInput, Pressable,} from "react-native";
+import {StyleSheet, Text, View, SafeAreaView, KeyboardAvoidingView, TextInput, Pressable,Alert} from "react-native";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import { Entypo } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { supabase } from "../../Supabase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import Dialog from 'react-native-dialog';
 const login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
+  const [dialogVisible, setDialogVisible] = useState(false);
+  const [userInput, setUserInput] = useState('');
   const router = useRouter();
-
-   useEffect(() => {
-     const checkLogin = async () => {
-     try {
-       const token = await AsyncStorage.getItem("authToken");
-        if (token) {
-         router.replace("/(home)");
-       }
-     } catch (error) {
-       console.log(error);
-     }
-     };
-
-    checkLogin();
-   }, []);
-
+  const handleCancel = () => {
+    setDialogVisible(false);
+  };
   const signUpWithEmail = async () => {
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
@@ -42,7 +32,33 @@ const login = () => {
      
       router.replace("/(home)");
     }
-  };
+  }
+  const handleConfirm = () => {
+    if (userInput === 'yakir') {
+      router.replace("/(employee)/loginemplye");
+      Alert.alert('yakir', 'הפעולה בוצעה בהצלחה!');
+      
+    } else {
+      Alert.alert('הקוד שהוזן אינו נכון, נסה שנית.');
+    }
+    setDialogVisible(false);
+  }
+
+   useEffect(() => {
+     const checkLogin = async () => {
+     try {
+       const token = await AsyncStorage.getItem("authToken");
+        if (token) {
+         router.replace("/(home)");
+       }
+     } catch (error) {
+       console.log(error);
+     }
+     };
+
+    checkLogin();
+   }, []);
+
 
   return (
     <SafeAreaView style={styles.first_view}>
@@ -96,18 +112,28 @@ const login = () => {
         >
           <Text style={styles.register}>לקוח חדש? לחץ להרשם</Text>
         </Pressable>
-        {/* כפתור התחברות למנהלים */}
-        <Pressable
-          onPress={() => router.replace("/(admin)/adminLogin")} // החלף כתובת זו על פי הניתוב שלך
-          style={{ marginTop: 15 }}
+        <Pressable onPress={() => setDialogVisible(true)}
         >
-          <Text style={styles.adminLogin}>התחברות למנהלים</Text>
+         <Text style={styles.adminLogin}>התחברות למנהלים</Text>
+         <Dialog.Container visible={dialogVisible}>
+        <Dialog.Title>הזן קוד מנהל או עובד לכניסה לאיזור ההנהלה </Dialog.Title>
+        <Dialog.Input onChangeText={(text) => setUserInput(text)} />
+        <Dialog.Button label="בטל" onPress={handleCancel} />
+        <Dialog.Button label="אשר" onPress={handleConfirm}  />
+        </Dialog.Container>
         </Pressable>
-        <Pressable
-          onPress={() => router.replace("/(employee)/loginemplye")} // צריך לסדר את הכתובת!
+   
+        <Pressable onPress={() => setDialogVisible(true)}
+         
           style={{ marginTop: 15 }}
         >
           <Text style={styles.adminLogin}>התחברות לעובדים</Text>
+          <Dialog.Container visible={dialogVisible}>
+        <Dialog.Title>הזן קוד מנהל או עובד לכניסה לאיזור ההנהלה </Dialog.Title>
+        <Dialog.Input onChangeText={(text) => setUserInput(text)} />
+        <Dialog.Button label="בטל" onPress={handleCancel} />
+        <Dialog.Button label="אשר" onPress={handleConfirm}  />
+        </Dialog.Container>
         </Pressable>
       </KeyboardAvoidingView>
     </SafeAreaView>

@@ -7,28 +7,15 @@ import { supabase } from "../../Supabase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const adminLogin = () => {
-  const [email, setEmail] = useState("");
+  const [phone, setphone] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-   useEffect(() => {
-     const checkLogin = async () => {
-     try {
-       const token = await AsyncStorage.getItem("authToken");
-        if (token) {
-         router.replace("/(home)");
-       }
-     } catch (error) {
-       console.log(error);
-     }
-     };
+  
 
-    checkLogin();
-   }, []);
-
-  const signUpWithEmail = async () => {
+  const signUpWithPhne = async () => {
     const { data, error } = await supabase.auth.signInWithPassword({
-      email: email,
+      phone: phone,
       password: password,
     });
     if (error) {
@@ -64,10 +51,10 @@ const adminLogin = () => {
               color="gray"
             />
             <TextInput
-              value={email}
-              onChangeText={(text) => setEmail(text)}
+              value={phone}
+              onChangeText={(text) => setphone(text)}
               style={styles.t_input}
-              placeholder="enter your Email"
+              placeholder="enter your Phone"
             />
           </View>
           <View style={styles.input_view}>
@@ -89,11 +76,11 @@ const adminLogin = () => {
           <Text>השאר אותי מחובר</Text>
           <Text>שכחתי סיסמא</Text>
         </View>
-        <Pressable onPress={signUpWithEmail} style={styles.login}>
+        <Pressable onPress={signUpWithPhne} style={styles.login}>
           <Text style={styles.login_t}>login</Text>
         </Pressable>
         <Pressable
-          onPress={() => router.replace("/register")}
+          onPress={() => router.replace("/adminsign")}
           style={{ marginTop: 15 }}
         >
           <Text style={styles.register}>מנהל חדש? לחץ להרשם</Text>
