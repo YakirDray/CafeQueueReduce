@@ -61,7 +61,7 @@ const adminLogin = () => {
             <Feather
               style={{ marginLeft: 8 }}
               name="unlock"
-              size={24}
+              size={24}ד
               color="black"
             />
             <TextInput

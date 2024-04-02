@@ -36,8 +36,18 @@ const login = () => {
     if (userInput === 'yakir') {
       router.replace("/(employee)/loginemplye");
       Alert.alert('yakir', 'הפעולה בוצעה בהצלחה!');
+    
       
-    } else {
+    } 
+    if (userInput === 'yakir2') {
+      router.replace("/(admin)/adminLogin");
+      Alert.alert('yakir2', 'הפעולה בוצעה בהצלחה!');
+    } 
+    if (userInput === 'nitay') {
+      router.replace("/(admin)/adminLogin");
+      Alert.alert('nitay', 'הפעולה בוצעה בהצלחה!');
+    }
+    else {
       Alert.alert('הקוד שהוזן אינו נכון, נסה שנית.');
     }
     setDialogVisible(false);
