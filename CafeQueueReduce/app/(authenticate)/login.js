@@ -33,20 +33,15 @@ const login = () => {
     }
   }
   const handleConfirm = () => {
-    if (userInput === 'yakir') {
+    if (userInput === 'employee') {
       router.replace("/(employee)/loginemplye");
-      Alert.alert('yakir', 'הפעולה בוצעה בהצלחה!');
-    
+      Alert.alert('employee', 'הפעולה בוצעה בהצלחה!');
       
     } 
-    if (userInput === 'yakir2') {
+    if (userInput === 'admin') {
       router.replace("/(admin)/adminLogin");
-      Alert.alert('yakir2', 'הפעולה בוצעה בהצלחה!');
+      Alert.alert('admin', 'הפעולה בוצעה בהצלחה!');
     } 
-    if (userInput === 'nitay') {
-      router.replace("/(admin)/adminLogin");
-      Alert.alert('nitay', 'הפעולה בוצעה בהצלחה!');
-    }
     else {
       Alert.alert('הקוד שהוזן אינו נכון, נסה שנית.');
     }
