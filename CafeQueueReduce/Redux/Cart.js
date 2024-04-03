@@ -57,5 +57,4 @@ export const {
 } = CartSlice.actions;
 
 export default CartSlice.reducer
-//export default Cart
 
