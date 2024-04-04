@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, ScrollView, StyleSheet, Alert } from 'react-native';
-import { supabase } from '../../Supabase'; // Adjust the import path as needed
+import { supabase } from '../../Supabase'; 
 
 const WeeklyScheduleScreen = () => {
   const [employeeName, setEmployeeName] = useState('');
@@ -11,16 +11,14 @@ const WeeklyScheduleScreen = () => {
   const addScheduleEntry = () => {
     const newEntry = { employeeName, day, hours: hours.split(',').map(hour => hour.trim()) };
     setScheduleData([...scheduleData, newEntry]);
-    // Optionally, clear the inputs here
   };
 
   const saveScheduleToServer = async () => {
     try {
-      // Example: Save the scheduleData to Supabase (or another server/cloud function to generate JSON file)
       const { error } = await supabase
         .from('schedules')
         .insert([{
-          // Assuming 'schedules' table has a 'data' column of type jsonb or text
+         
           data: scheduleData,
         }]);
       if (error) {
@@ -28,6 +26,7 @@ const WeeklyScheduleScreen = () => {
       }
         
       Alert.alert("Success", "Schedule saved successfully.");
+      console.log(scheduleData)
     } catch (error) {
       Alert.alert("Error saving schedule", error.message);
     }
