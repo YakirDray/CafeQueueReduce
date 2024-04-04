@@ -7,15 +7,15 @@ import { supabase } from "../../Supabase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const adminLogin = () => {
-  const [phone, setphone] = useState("");
+  const [email, setEmail] =useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
 
   
 
-  const signUpWithPhne = async () => {
+  const signUpWithEmail = async () => {
     const { data, error } = await supabase.auth.signInWithPassword({
-      phone: phone,
+      email: email,
       password: password,
     });
     if (error) {
@@ -51,10 +51,10 @@ const adminLogin = () => {
               color="gray"
             />
             <TextInput
-              value={phone}
-              onChangeText={(text) => setphone(text)}
+              value={email}
+              onChangeText={(text) => setEmail(text)}
               style={styles.t_input}
-              placeholder="enter your Phone"
+              placeholder="enter your Email"
             />
           </View>
           <View style={styles.input_view}>
@@ -76,7 +76,7 @@ const adminLogin = () => {
           <Text>השאר אותי מחובר</Text>
           <Text>שכחתי סיסמא</Text>
         </View>
-        <Pressable onPress={signUpWithPhne} style={styles.login}>
+        <Pressable onPress={signUpWithEmail} style={styles.login}>
           <Text style={styles.login_t}>login</Text>
         </Pressable>
         <Pressable
