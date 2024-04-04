@@ -1,21 +1,34 @@
-import React, { useState } from 'react';
-import { View, Button, Image, Text, ScrollView, Modal, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Button, ScrollView, Modal, TextInput, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { supabase } from "../../Supabase";
 
-//  const logoImg = require("./assets/adaptive-icon.png");
-
-export default function App() {
+const AddEmployee = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [employeeData, setEmployeeData] = useState({
     name: '',
     position: '',
-    department: '',
-    salary: ''
+    phone: '',
+    salary: '',
   });
 
-  const handleSaveEmployee = () => {
-    // עדכון פרטי העובד כאן עם המשתנה employeeData
-    console.log("Saved employee data:", employeeData);
-    setIsModalVisible(false); // סגירת המודל ברגע שנשמרו הפרטים
+  const handleSaveEmployee = async () => {
+    try {
+      // Insert employeeData as a JSON object
+      const { data, error } = await supabase
+        .from("employ")
+        .insert([
+          { data: employeeData } 
+        ]);
+
+      if (error) {
+        throw error;
+      }
+
+      console.log("Saved employee data:", employeeData);
+      setIsModalVisible(false);
+    } catch (error) {
+      console.error("Error saving employee data:", error);
+    }
   };
 
   return (
@@ -56,7 +69,7 @@ export default function App() {
             onChangeText={text => setEmployeeData({ ...employeeData, salary: text })}
           />
 
-          {/* כפתור לשמירת העובד */}
+          
           <TouchableOpacity onPress={handleSaveEmployee} style={styles.button}>
             <Text style={{ color: 'white' }}>שמור פרטי עובד</Text>
           </TouchableOpacity>
@@ -65,6 +78,7 @@ export default function App() {
     </View>
   );
 }
+export default AddEmployee
 
 const styles = StyleSheet.create({
   modalTitle: {
