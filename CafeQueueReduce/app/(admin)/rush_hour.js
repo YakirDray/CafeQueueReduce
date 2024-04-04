@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Modal } from 'react-native';
-
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Modal,Pressable } from 'react-native';
+import { useRouter } from 'expo-router';
 const BusyHoursCarousel = () => {
+  const router =useRouter();
   const [busyHours, setBusyHours] = useState([]);
   const [selectedHour, setSelectedHour] = useState(null); // השעה שנבחרה
   const [isModalVisible, setIsModalVisible] = useState(false); // האם המודל פתוח
@@ -41,8 +42,16 @@ const BusyHoursCarousel = () => {
 
   return (
     <View style={styles.container}>
+      <View>
+      <Pressable
+          onPress={() => router.replace("/homeAdmin")}
+          style={{ marginTop: 15 }}
+        >
+          <Text style={styles.back}>חזור</Text>
+        </Pressable>
+      </View>
       <Text style={styles.title}>שעות עומס במהלך היום:</Text>
-      <ScrollView horizontal>
+      <ScrollView >
         <View style={styles.carousel}>
           {busyHours.map((hour) => (
             <TouchableOpacity key={hour.hour} onPress={() => openModal(hour)} style={[styles.card, hour.count > 10 ? styles.busyCard : null]}>
@@ -83,6 +92,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   hourContainer: {
+    marginTop:30,
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 5,
@@ -92,12 +102,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   carousel: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     paddingBottom: 20,
   },
   card: {
+    marginTop: 20,
+
     backgroundColor: '#f0f0f0',
     padding: 20,
     marginHorizontal: 10,
@@ -164,6 +176,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
   },
+  back:{
+    fontSize:20
+  }
 });
 
 export default BusyHoursCarousel;

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { ScrollView, StyleSheet, Text, View, TouchableOpacity, TextInput, Image,Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -143,7 +143,7 @@ const Index = () => {
         <Ionicons name="restaurant-outline" size={24} color="#ffe4b5" />
         <View style={{ flex: 1 }}>
           <Text style={{ fontSize: 15, fontWeight: "200" }}>אפליקצית ההזמנות של קפיטריית סמי שמעון</Text>
-          <Text style={{ color: "#E52850", fontSize: 16, marginTop: 3 }}>הזמן מהר ולהרצאה לא תאחר</Text>
+          <Text style={{ color: "#E52850", fontSize: 16, marginTop: 3 }}>G18  הזמן מהר ולהרצאה לא תאחר</Text>
         </View>
       </View>
 

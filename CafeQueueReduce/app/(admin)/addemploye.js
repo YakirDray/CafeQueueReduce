@@ -1,19 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { View, Button, ScrollView, Modal, TextInput, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import React, { useState } from 'react';
+import { View, Button, ScrollView, Modal, TextInput, TouchableOpacity, StyleSheet, Text,Pressable } from 'react-native';
 import { supabase } from "../../Supabase";
-
+import { useRouter } from 'expo-router';
+import homeAdmin from './homeAdmin';
 const AddEmployee = () => {
+ 
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const router = useRouter();
   const [employeeData, setEmployeeData] = useState({
     name: '',
     position: '',
     phone: '',
     salary: '',
   });
-
+ 
   const handleSaveEmployee = async () => {
     try {
-      // Insert employeeData as a JSON object
+    
       const { data, error } = await supabase
         .from("employ")
         .insert([
@@ -31,11 +34,17 @@ const AddEmployee = () => {
     }
   };
 
+
   return (
     <View style={{ flex: 1, backgroundColor: "white", padding: 60 }}>
       <ScrollView>
         <Button title='להוספת כרטיס עובד חדש:' onPress={() => setIsModalVisible(true)} color="green" />
-        {/* <Image source={logoImg} style={{ flex: 1 }} /> */}
+        <Pressable
+          onPress={() => router.replace("/homeAdmin")}
+          style={{ marginTop: 15 }}
+        >
+          <Text style={styles.back}>חזור</Text>
+        </Pressable>
       </ScrollView>
 
       
@@ -78,7 +87,7 @@ const AddEmployee = () => {
     </View>
   );
 }
-export default AddEmployee
+export default AddEmployee;
 
 const styles = StyleSheet.create({
   modalTitle: {
@@ -101,6 +110,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     marginTop: 10
+  },
+  back:{
+    fontSize:25
   }
 });
 

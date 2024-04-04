@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, ScrollView, StyleSheet,StatusBar } from 'react-native';
+import { View, Text, TextInput, ScrollView, StyleSheet,StatusBar,Pressable } from 'react-native';
 import { useRouter } from "expo-router";
 const WeeklyScheduleScreen = () => {
   const router = useRouter();
@@ -13,8 +13,8 @@ const WeeklyScheduleScreen = () => {
     { day: 'Saturday', employees: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''] },
   ]);
 
-  const morningHours = ['8-9', '9-10', '10-11', '11-12', '12-13'];
-  const afternoonHours = ['13-14', '14-15', '15-16', '16-17', '17-18'];
+  const morningHours = ['8-15'];
+  const afternoonHours = ['15-20'];
   const handleEmployeeChange = (dayIndex, employeeIndex, text) => {
     const updatedScheduleData = [...scheduleData];
     updatedScheduleData[dayIndex].employees[employeeIndex] = text;
@@ -22,7 +22,16 @@ const WeeklyScheduleScreen = () => {
   };
 
   return (
+    
     <ScrollView horizontal style={{ marginVertical: 20 }}>
+      <View>
+      <Pressable
+          onPress={() => router.replace("/homeAdmin")}
+          style={{ marginTop: 15 }}
+        >
+          <Text style={styles.back}>חזור</Text>
+        </Pressable>
+      </View>
       <StatusBar backgroundColor="#00BFFF" />
       <View style={styles.container}>
         <View style={styles.header}>
@@ -74,7 +83,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 30,
-    minWidth: '100%',
+    Width: '100%',
     marginVertical:30,
   },
   header: {
@@ -121,6 +130,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 2,
     borderRadius: 20,
   },
+  back:{
+    fontSize:25
+  }
 });
 
 export default WeeklyScheduleScreen;

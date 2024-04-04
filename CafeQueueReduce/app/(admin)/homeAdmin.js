@@ -73,7 +73,9 @@ const homeAdmin = () => {
     else if (item.id === "4") {
         router.replace("/rush_hour");
     }
-    // וכך הלאה לכל הפריטים הנותרים במערך
+    else if(item.id==="6"){
+      router.replace("/mostseitem");
+    }
   };
 
   return (
@@ -111,6 +113,7 @@ const homeAdmin = () => {
     </ScrollView>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
