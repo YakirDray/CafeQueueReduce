@@ -1,80 +1,66 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, ScrollView, StyleSheet,StatusBar,Pressable } from 'react-native';
-import { useRouter } from "expo-router";
-const WeeklyScheduleScreen = () => {
-  const router = useRouter();
-  const [scheduleData, setScheduleData] = useState([
-    { day: 'Sunday', employees: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''] },
-    { day: 'Monday', employees: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''] },
-    { day: 'Tuesday', employees: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''] },
-    { day: 'Wednesday', employees: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''] },
-    { day: 'Thursday', employees: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''] },
-    { day: 'Friday', employees: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''] },
-    { day: 'Saturday', employees: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''] },
-  ]);
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Button, ScrollView, StyleSheet, Alert } from 'react-native';
+import { supabase } from '../../Supabase'; // Adjust the import path as needed
 
-  const morningHours = ['8-15'];
-  const afternoonHours = ['15-20'];
-  const handleEmployeeChange = (dayIndex, employeeIndex, text) => {
-    const updatedScheduleData = [...scheduleData];
-    updatedScheduleData[dayIndex].employees[employeeIndex] = text;
-    setScheduleData(updatedScheduleData);
+const WeeklyScheduleScreen = () => {
+  const [employeeName, setEmployeeName] = useState('');
+  const [day, setDay] = useState('');
+  const [hours, setHours] = useState('');
+  const [scheduleData, setScheduleData] = useState([]);
+
+  const addScheduleEntry = () => {
+    const newEntry = { employeeName, day, hours: hours.split(',').map(hour => hour.trim()) };
+    setScheduleData([...scheduleData, newEntry]);
+    // Optionally, clear the inputs here
+  };
+
+  const saveScheduleToServer = async () => {
+    try {
+      // Example: Save the scheduleData to Supabase (or another server/cloud function to generate JSON file)
+      const { error } = await supabase
+        .from('schedules')
+        .insert([{
+          // Assuming 'schedules' table has a 'data' column of type jsonb or text
+          data: scheduleData,
+        }]);
+      if (error) {
+        throw error;
+      }
+        
+      Alert.alert("Success", "Schedule saved successfully.");
+    } catch (error) {
+      Alert.alert("Error saving schedule", error.message);
+    }
   };
 
   return (
-    
-    <ScrollView horizontal style={{ marginVertical: 20 }}>
-      <View>
-      <Pressable
-          onPress={() => router.replace("/homeAdmin")}
-          style={{ marginTop: 15 }}
-        >
-          <Text style={styles.back}>חזור</Text>
-        </Pressable>
-      </View>
-      <StatusBar backgroundColor="#00BFFF" />
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <View style={styles.cell}><Text style={styles.headerText}>Hours</Text></View>
-          {scheduleData.map((item, index) => (
-            <View key={index} style={[styles.cell, styles.headerCell]}>
-              <Text style={styles.headerText}>{item.day}</Text>
-              
-            </View>
-          ))}
+    <ScrollView style={styles.container}>
+      <TextInput
+        placeholder="Employee Name"
+        value={employeeName}
+        onChangeText={setEmployeeName}
+        style={styles.input}
+      />
+      <TextInput
+        placeholder="Day (e.g., Monday)"
+        value={day}
+        onChangeText={setDay}
+        style={styles.input}
+      />
+      <TextInput
+        placeholder="Hours (e.g., 8-9,10-11)"
+        value={hours}
+        onChangeText={setHours}
+        style={styles.input}
+      />
+      <Button title="Add Schedule Entry" onPress={addScheduleEntry} />
+      <Button title="Save Schedule to Server" onPress={saveScheduleToServer} color="#0066CC" />
+      
+      {scheduleData.map((entry, index) => (
+        <View key={index} style={styles.entry}>
+          <Text>{entry.employeeName} - {entry.day} - {JSON.stringify(entry.hours)}</Text>
         </View>
-        {morningHours.map((hour, hourIndex) => (
-          <View style={styles.row} key={hourIndex}>
-            <View style={[styles.cell, styles.hourCell]}><Text>{hour}</Text></View>
-            {scheduleData.map((item, dayIndex) => (
-              <TextInput
-                key={dayIndex}
-                style={[styles.cell, styles.employeeCell]}
-                onChangeText={text => handleEmployeeChange(dayIndex, hourIndex, text)}
-                value={scheduleData[dayIndex].employees[hourIndex]}
-                placeholder="Employee"
-              />
-            ))}
-          </View>
-        ))}
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}>Afternoon Shift</Text>
-        </View>
-        {afternoonHours.map((hour, hourIndex) => (
-          <View style={styles.row} key={hourIndex}>
-            <View style={[styles.cell, styles.hourCell]}><Text>{hour}</Text></View>
-            {scheduleData.map((item, dayIndex) => (
-              <TextInput
-                key={dayIndex}
-                style={[styles.cell, styles.employeeCell]}
-                onChangeText={text => handleEmployeeChange(dayIndex, hourIndex + morningHours.length, text)}
-                value={scheduleData[dayIndex].employees[hourIndex + morningHours.length]}
-                placeholder="Employee"
-              />
-            ))}
-          </View>
-        ))}
-      </View>
+      ))}
     </ScrollView>
   );
 };
@@ -82,59 +68,19 @@ const WeeklyScheduleScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 30,
-    Width: '100%',
-    marginVertical:30,
+    padding: 10,
   },
-  header: {
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderBottomColor: 'black',
-    paddingBottom: 5,
-    marginBottom: 5,
-  },
-  row: {
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderBottomColor: 'lightgray',
-    paddingBottom: 5,
-    marginBottom: 20,
-  },
-  cell: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    minWidth: 80,
-  },
-  headerCell: {
-    backgroundColor: 'green',
-    borderRadius: 30,
-    minWidth: 80,
-  },
-  headerText: {
-    fontWeight: 'bold',
-  },
-  hourCell: {
-    backgroundColor: '#00BFFF',
-    width: 80,
-    borderRadius: 30,
-  },
-  employeeCell: {
-    backgroundColor: 'white',
+  input: {
     borderWidth: 1,
-    borderColor: '#00BFFF',
-    width: 80,
-    paddingHorizontal: 5,
-    paddingVertical: 5,
-    marginHorizontal: 2,
-    borderRadius: 20,
+    borderColor: '#ddd',
+    padding: 10,
+    marginVertical: 5,
   },
-  back:{
-    fontSize:25
-  }
+  entry: {
+    padding: 10,
+    marginVertical: 5,
+    backgroundColor: '#f0f0f0',
+  },
 });
 
 export default WeeklyScheduleScreen;
-
-   

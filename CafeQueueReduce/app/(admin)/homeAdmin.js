@@ -55,7 +55,7 @@ const homeAdmin = () => {
     },
     {
       id: "5",
-      name: "חוות דעת על המוצרים"
+      name: " שעון נוכחות "
     },
     {
       id: "6",
@@ -76,6 +76,13 @@ const homeAdmin = () => {
     else if(item.id==="6"){
       router.replace("/mostseitem");
     }
+    else if(item.id==="3"){
+      router.replace("/ordersdata");
+    }
+    else if(item.id==="5"){
+      router.replace("/clock");
+    }
+
   };
 
   return (
@@ -84,14 +91,14 @@ const homeAdmin = () => {
         onPress={handleLogout}
         style={styles.logoutButton}
         onPressIn={() => setIsPressed(true)}
-       // onPressOut={() => setIsPressed(false)}
+      
       >
         <Text style={styles.logoutText}>התנתקות</Text>
       </TouchableOpacity>
       <View style={styles.container}>
         <View style={styles.title}>
           <Text style={styles.textTytle}>
-            עמוד קטגוריות למנהל
+             הנהלה 
           </Text>
         </View>
         <FlatList

@@ -4,18 +4,11 @@ import configureStore from 'redux-mock-store';
 import { render, fireEvent } from '@testing-library/react-native';
 import Cart from './cart';
 
-const mockStore = configureStore([]);
+
 
 describe('<cart />', () => {
   let store;
 
-  beforeEach(() => {
-    store = mockStore({
-      cart: {
-        cart: [{ id: '1', name: 'Item 1', price: 10, quantity: 1 }],
-      },
-    });
-  });
 
   it('updates total when incrementing item quantity', () => {
     const { getByText } = render(
