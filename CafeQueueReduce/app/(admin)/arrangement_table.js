@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, ScrollView, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, Button, ScrollView, StyleSheet, Alert ,Pressable} from 'react-native';
 import { supabase } from '../../Supabase'; 
-
+import { useRouter } from 'expo-router';
 const WeeklyScheduleScreen = () => {
   const [employeeName, setEmployeeName] = useState('');
   const [day, setDay] = useState('');
   const [hours, setHours] = useState('');
   const [scheduleData, setScheduleData] = useState([]);
-
+  const router=useRouter()
   const addScheduleEntry = () => {
     const newEntry = { employeeName, day, hours: hours.split(',').map(hour => hour.trim()) };
     setScheduleData([...scheduleData, newEntry]);
@@ -54,7 +54,12 @@ const WeeklyScheduleScreen = () => {
       />
       <Button title="Add Schedule Entry" onPress={addScheduleEntry} />
       <Button title="Save Schedule to Server" onPress={saveScheduleToServer} color="#0066CC" />
-      
+      <Pressable
+          onPress={() => router.replace("/homeAdmin")}
+          style={{ marginTop: 15 }}
+        >
+          <Text style={styles.back}>חזור</Text>
+        </Pressable>
       {scheduleData.map((entry, index) => (
         <View key={index} style={styles.entry}>
           <Text>{entry.employeeName} - {entry.day} - {JSON.stringify(entry.hours)}</Text>
@@ -80,6 +85,9 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     backgroundColor: '#f0f0f0',
   },
+  back:{
+    fontSize:20
+  }
 });
 
 export default WeeklyScheduleScreen;
