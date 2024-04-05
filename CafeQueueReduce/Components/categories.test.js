@@ -1,5 +1,4 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
 
 import Categories from './categories';
 test("לחיצה על כפתור 'חזור לקטגוריות' צריכה לסגור את המודל ולחזור למסך הקטגוריות", async () => {

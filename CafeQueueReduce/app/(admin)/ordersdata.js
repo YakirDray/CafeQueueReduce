@@ -58,7 +58,7 @@ const OrdersData = () => {
           color="green"
         />
         <TouchableOpacity
-          onPress={() => router.replace("HomeAdmin")}
+          onPress={() => router.replace("/homeAdmin")}
           style={styles.button}
         >
           <Text style={styles.back}>חזור</Text>
