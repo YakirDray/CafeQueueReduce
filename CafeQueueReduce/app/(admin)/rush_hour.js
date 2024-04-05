@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Modal,Pressable, } from 'react-native';
 
 const BusyHoursCarousel = () => {
   const [busyHours, setBusyHours] = useState([]);
@@ -65,9 +65,16 @@ const BusyHoursCarousel = () => {
           </View>
         </View>
       </Modal>
+      <Pressable
+          onPress={() => router.replace("/homeAdmin")}
+          style={{ marginTop: 15 }}
+        >
+          <Text style={styles.back}>חזור</Text>
+        </Pressable>
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
