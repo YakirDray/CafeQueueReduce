@@ -80,7 +80,7 @@ const adminLogin = () => {
           <Text style={styles.login_t}>login</Text>
         </Pressable>
         <Pressable
-          onPress={() => router.replace("/adminsign")}
+          onPress={() => router.replace("/(authenticate)/register")}
           style={{ marginTop: 15 }}
         >
           <Text style={styles.register}>מנהל חדש? לחץ להרשם</Text>
