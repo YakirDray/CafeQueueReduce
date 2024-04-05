@@ -1,12 +1,11 @@
+
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Modal, Pressable } from 'react-native';
-import { useRouter } from 'expo-router';
-import { supabase } from '../../Supabase';
-const RushHour = () => {
-  const router = useRouter();
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+
+const BusyHoursCarousel = () => {
   const [busyHours, setBusyHours] = useState([]);
-  const [selectedHour, setSelectedHour] = useState(null); // Selected hour
-  const [isModalVisible, setIsModalVisible] = useState(false); // Modal visibility
+  const [selectedHour, setSelectedHour] = useState(null); // השעה שנבחרה
+  const [isModalVisible, setIsModalVisible] = useState(false); // האם המודל פתוח
 
   useEffect(() => {
     const generateBusyHours = () => {
@@ -14,11 +13,11 @@ const RushHour = () => {
       for (let i = 8; i <= 18; i++) {
         staticBusyHours.push({ hour: i, count: Math.floor(Math.random() * 20) });
       }
-      saveBusyHoursToSupabase(staticBusyHours)
       return staticBusyHours;
     };
 
-    setBusyHours(generateBusyHours());
+    const staticBusyHours = generateBusyHours();
+    setBusyHours(staticBusyHours);
   }, []);
 
   const openModal = (hour) => {
@@ -30,44 +29,31 @@ const RushHour = () => {
     setSelectedHour(null);
     setIsModalVisible(false);
   };
-  const saveBusyHoursToSupabase = async (busyHours) => {
-    try {
-      const {  error } = await supabase
-        .from('RushHour')
-        .insert([
-          { date: new Date().toISOString().split('T')[0], Hour_data: busyHours },
-        ]);
-  
-      if (error) {
-        throw error;
-      }
-  
-      console.log('Data saved successfully:', busyHours);
-      alert('Busy hours saved successfully!');
-    } catch (error) {
-      console.error('Error saving busy hours:', error.message);
-      alert('Failed to save busy hours.');
-    }
-  };
+
+  const renderItem = ({ item }) => (
+    <TouchableOpacity onPress={() => openModal(item)} key={item.hour}>
+      <View style={styles.hourContainer}>
+        <Text style={[styles.hourText, item.count > 10 ? styles.busyHour : styles.notBusyHour]}>
+          {item.hour}:00 - {item.count} לקוחות
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+
   return (
     <View style={styles.container}>
-     
       <Text style={styles.title}>שעות עומס במהלך היום:</Text>
-      <ScrollView>
+      <ScrollView horizontal>
         <View style={styles.carousel}>
           {busyHours.map((hour) => (
-            <TouchableOpacity key={hour.hour} onPress={() => openModal(hour)} style={[styles.card, { opacity: hour.count / 20 }]}>
+            <TouchableOpacity key={hour.hour} onPress={() => openModal(hour)} style={[styles.card, hour.count > 10 ? styles.busyCard : null]}>
               <Text style={styles.cardTitle}>{hour.hour}:00</Text>
               <Text style={styles.cardContent}>{hour.count} לקוחות</Text>
             </TouchableOpacity>
           ))}
-          <View>
-           <Pressable onPress={() => router.replace("/homeAdmin")} style={{ marginTop: 15 }}>
-        <Text style={styles.back}>חזור</Text>
-      </Pressable>
-      </View>
         </View>
       </ScrollView>
+      
       <Modal visible={isModalVisible} animationType="slide" transparent>
         <View style={styles.modalBackground}>
           <View style={styles.modalContent}>
@@ -86,95 +72,99 @@ const RushHour = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
-    alignItems: 'center',
-    justifyContent: 'flex-start', // Adjusted for content alignment
+    paddingHorizontal: 20,
     paddingTop: 20,
+    alignItems: 'center',
   },
   title: {
-    fontSize: 22,
+    marginTop: 20,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#333',
     marginBottom: 20,
+    textAlign: 'center',
+  },
+  hourContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  hourText: {
+    fontSize: 18,
+    textAlign: 'center',
   },
   carousel: {
-    width: '100%', // Ensure carousel takes full container width
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center', // Center items for better visual alignment
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: 20,
   },
   card: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#f0f0f0',
+    padding: 20,
+    marginHorizontal: 10,
     borderRadius: 10,
-    padding: 15,
-    margin: 5,
-    width: '45%', // Adjust card width for better grid appearance
-    alignItems: 'center', // Center text and content within the card
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.23,
-    shadowRadius: 2.62,
-    elevation: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 100,
   },
   cardTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#0275d8', // Use a theme color for titles
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
   cardContent: {
     fontSize: 16,
-    color: '#666', // Slightly muted text for content
-    marginTop: 5,
+  },
+  busyHour: {
+    color: 'red',
+    fontWeight: 'bold',
+    borderWidth: 1,
+    borderColor: 'red',
+    borderRadius: 5,
+    padding: 5,
+  },
+  notBusyHour: {
+    color: 'green',
+    borderWidth: 1,
+    borderColor: 'green',
+    borderRadius: 5,
+    padding: 5,
+  },
+  busyCard: {
+    backgroundColor: 'red',
   },
   modalBackground: {
     flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Dimmed background for better focus on modal
   },
   modalContent: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center', // Center modal content
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    width: '80%',
+    alignItems: 'center',
   },
   modalTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 15,
+    marginBottom: 10,
   },
   modalText: {
-    fontSize: 18,
-    marginBottom: 25,
+    fontSize: 16,
+    marginBottom: 20,
   },
   closeButton: {
-    backgroundColor: '#0275d8',
-    borderRadius: 20,
+    backgroundColor: 'red',
     paddingVertical: 10,
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
+    borderRadius: 10,
   },
   closeButtonText: {
-    color: 'white',
+    color: '#fff',
     fontSize: 16,
-  },
-  back: {
-    fontSize: 18,
-    color: '#0275d8',
-    alignSelf: 'flex-start', // Align 'Back' to the start of its container
-    marginLeft: 10, // Provide some margin from the edge
   },
 });
 
-export default RushHour;
+export default BusyHoursCarousel;
