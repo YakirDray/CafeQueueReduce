@@ -16,7 +16,7 @@ const loginemplye = () => {
      try {
        const token = await AsyncStorage.getItem("authToken");
         if (token) {
-         router.replace("/(admin)/rush_hour");
+         router.replace("/(employee)/loginemplye");
        }
      } catch (error) {
        console.log(error);
@@ -40,7 +40,7 @@ const loginemplye = () => {
       AsyncStorage.setItem("authToken", token);
       
      
-      router.replace("/(admin)/rush_hour");
+      router.replace("/clock");
     }
   };
 

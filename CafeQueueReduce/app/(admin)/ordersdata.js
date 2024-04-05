@@ -27,7 +27,7 @@ const OrdersData = () => {
       console.log("Preparing to save:", orderData); // Verify the data structure
 
       // Save to Supabase
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("Inventory_management")
         .insert([
           {
