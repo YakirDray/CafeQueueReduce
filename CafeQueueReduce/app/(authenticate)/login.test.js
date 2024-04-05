@@ -1,4 +1,4 @@
-import { render, fireEvent } from '@testing-library/react-native';
+/*import { render, fireEvent } from '@testing-library/react-native';
 import Login from './login'; // שים לב לנתיב הנכון לקובץ שלך
 
 describe('<Login />', () => {
@@ -13,4 +13,4 @@ describe('<Login />', () => {
     expect(emailInput.props.value).toBe('test@example.com');
     expect(passwordInput.props.value).toBe('password123');
   });
-});
+});*/

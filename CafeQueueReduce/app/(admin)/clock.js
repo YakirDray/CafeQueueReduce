@@ -27,7 +27,7 @@ const clock = () => {
   const handleClockIn = async () => {
     const clockInTime = new Date().toISOString();
     const { data, error } = await supabase
-      .from('time_clock_emp')
+      .from('time_clock')
       .insert([
         { name, clock_in: clockInTime, salary_per_hour: salaryPerHour }
       ]);

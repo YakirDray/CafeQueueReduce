@@ -40,7 +40,7 @@ const loginemplye = () => {
       AsyncStorage.setItem("authToken", token);
       
      
-      router.replace("/clock");
+      router.replace("/(admin)/clock");
     }
   };
 
