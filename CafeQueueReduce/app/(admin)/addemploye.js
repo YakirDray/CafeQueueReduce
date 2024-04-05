@@ -28,7 +28,7 @@ const AddEmployee = () => {
   const handleSaveEmployee = async () => {
     try {
       const { data, error } = await supabase
-        .from("employ")
+        .from("Employee_card")
         .insert([{ data: employeeData }]);
 
       if (error) {
