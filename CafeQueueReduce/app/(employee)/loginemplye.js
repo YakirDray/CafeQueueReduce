@@ -1,4 +1,12 @@
-import {StyleSheet, Text, View, SafeAreaView, KeyboardAvoidingView, TextInput, Pressable,} from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  TextInput,
+  Pressable,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import { Entypo } from "@expo/vector-icons";
@@ -11,20 +19,20 @@ const loginemplye = () => {
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-   useEffect(() => {
-     const checkLogin = async () => {
-     try {
-       const token = await AsyncStorage.getItem("authToken");
+  useEffect(() => {
+    const checkLogin = async () => {
+      try {
+        const token = await AsyncStorage.getItem("authToken");
         if (token) {
-         router.replace("/(employee)/loginemplye");
-       }
-     } catch (error) {
-       console.log(error);
-     }
-     };
+          router.replace("/(employee)/loginemplye");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
     checkLogin();
-   }, []);
+  }, []);
 
   const signUpWithEmail = async () => {
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -38,8 +46,7 @@ const loginemplye = () => {
     if (data) {
       const token = data?.session?.access_token;
       AsyncStorage.setItem("authToken", token);
-      
-     
+
       router.replace("/(admin)/clock");
     }
   };
@@ -52,8 +59,7 @@ const loginemplye = () => {
       <KeyboardAvoidingView>
         <View style={{ alignItems: "center" }}>
           <Text style={styles.s_title}>התחבר</Text>
-          <Text style ={styles.f_title} > התחברות לעובדים</Text>
-
+          <Text style={styles.f_title}> התחברות לעובדים</Text>
         </View>
         <View style={{ marginTop: 70 }}>
           <View style={styles.input_view}>
@@ -99,7 +105,7 @@ const loginemplye = () => {
           <Text style={styles.register}>עובד חדש? לחץ להרשם</Text>
         </Pressable>
         {/* כפתור התחברות למנהלים */}
-        
+
         <Pressable
           onPress={() => router.replace("/(authenticate)/login")} // צריך לסדר את הכתובת!
           style={{ marginTop: 15 }}
@@ -141,7 +147,7 @@ const styles = StyleSheet.create({
   },
   t_input: {
     color: "gray",
-    marginVertical: 10, 
+    marginVertical: 10,
     width: 300,
   },
   bottom_view: {
@@ -175,6 +181,4 @@ const styles = StyleSheet.create({
     color: "blue", // ניתן לשנות צבע כדי להתאים לעיצוב שלך
     fontSize: 20,
   },
-  
 });
-

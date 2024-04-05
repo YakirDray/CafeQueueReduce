@@ -9,7 +9,7 @@ import {
   Pressable,
   TextInput,
 } from "react-native";
-import { useState,useMemo } from "react";
+import { useState, useMemo } from "react";
 import { addToCart } from "../../Redux/Cart";
 import { useDispatch } from "react-redux";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -28,7 +28,6 @@ const Menuitems = [
         description: "שניצל עוף פריך מוגש עם תוספת לבחירה",
         prepTime: "15 min",
         image: require("../../assets/schnitzel.webp"),
-        
       },
       {
         id: "2",
@@ -386,19 +385,19 @@ const menu = ({}) => {
   const params = useLocalSearchParams();
   const router = useRouter();
   const cart = useSelector((state) => state.cart.cart);
-  
+
   console.log(cart);
   const itemToRender = useMemo(() => {
     if (!filterQuery) {
       return Menuitems;
     }
-    return Menuitems.map(category => ({
-        ...category,
-        item: category.item.filter(item => 
-           item.name.toLowerCase().includes(filterQuery.toLowerCase()))
-    })).filter(category => category.item.length > 0); 
-}, [filterQuery, Menuitems]);
-
+    return Menuitems.map((category) => ({
+      ...category,
+      item: category.item.filter((item) =>
+        item.name.toLowerCase().includes(filterQuery.toLowerCase())
+      ),
+    })).filter((category) => category.item.length > 0);
+  }, [filterQuery, Menuitems]);
 
   const dispatch = useDispatch();
 
@@ -411,48 +410,47 @@ const menu = ({}) => {
         <Text style={styles.itemPrice}>Price:{item.price}₪</Text>
         <Text style={styles.itemPrepTime}>Prep time: {item.prepTime}</Text>
         <Pressable
-  style={({ pressed }) => [
-    {
-      backgroundColor: pressed ? '#ffce00' : '#f5a623', // Changes color when pressed
-      padding: 5,
-      borderRadius: 10,
-      elevation: pressed ? 2 : 5, // Changes elevation when pressed for a subtle shadow effect
-      shadowColor: '#000', // Shadow for iOS
-      shadowOffset: { width: 0, height: 2 },
-     
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      width:"90%",
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginHorizontal: 10, // Adjust based on your layout
-      marginTop: 10,
-    },
-  ]}
-  onPress={() => dispatch(addToCart(item))}
->
-  <Text style={{ color: '#fff', fontWeight: 'bold' }}>Add to Cart</Text>
-</Pressable>
+          style={({ pressed }) => [
+            {
+              backgroundColor: pressed ? "#ffce00" : "#f5a623", // Changes color when pressed
+              padding: 5,
+              borderRadius: 10,
+              elevation: pressed ? 2 : 5, // Changes elevation when pressed for a subtle shadow effect
+              shadowColor: "#000", // Shadow for iOS
+              shadowOffset: { width: 0, height: 2 },
 
-        
-        <Pressable style={({ pressed }) => [
-    {
-      backgroundColor: pressed ? '#ffce00' : '#f5a623', // Changes color when pressed
-      padding: 5,
-      borderRadius: 10,
-      elevation: pressed ? 2 : 5, // Changes elevation when pressed for a subtle shadow effect
-      shadowColor: '#000', // Shadow for iOS
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      width:"90%",
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginHorizontal: 10, 
-      marginTop: 10,
-    },
-  ]}
-        
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              width: "90%",
+              alignItems: "center",
+              justifyContent: "center",
+              marginHorizontal: 10, // Adjust based on your layout
+              marginTop: 10,
+            },
+          ]}
+          onPress={() => dispatch(addToCart(item))}
+        >
+          <Text style={{ color: "#fff", fontWeight: "bold" }}>Add to Cart</Text>
+        </Pressable>
+
+        <Pressable
+          style={({ pressed }) => [
+            {
+              backgroundColor: pressed ? "#ffce00" : "#f5a623", // Changes color when pressed
+              padding: 5,
+              borderRadius: 10,
+              elevation: pressed ? 2 : 5, // Changes elevation when pressed for a subtle shadow effect
+              shadowColor: "#000", // Shadow for iOS
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              width: "90%",
+              alignItems: "center",
+              justifyContent: "center",
+              marginHorizontal: 10,
+              marginTop: 10,
+            },
+          ]}
           onPress={() =>
             router.push({
               pathname: "/cart",
@@ -460,13 +458,12 @@ const menu = ({}) => {
                 name: item.name,
                 price: item.price,
                 rating: item.rating,
-                description:item.description,
-                
+                description: item.description,
               },
             })
           }
         >
-          <Text style={{ fontSize: 25,color:"red" }}>Cart</Text>
+          <Text style={{ fontSize: 25, color: "red" }}>Cart</Text>
         </Pressable>
       </View>
     </View>
@@ -481,27 +478,27 @@ const menu = ({}) => {
         keyExtractor={(item) => item.id}
         horizontal={false}
       />
-      <View>
-     
-      </View>
+      <View></View>
     </View>
   );
-  
+
   return (
     <ScrollView style={styles.container}>
-      
-       <View 
-    style={styles.searchBar}>
-    <TextInput placeholder="Welcome to the cafeteria of Sami Shamoon College" value={filterQuery} onChangeText={setFilterQuery} style={{ flex: 1 }} />
-    <AntDesign name="search1" size={24} color="blue" />
+      <View style={styles.searchBar}>
+        <TextInput
+          placeholder="Welcome to the cafeteria of Sami Shamoon College"
+          value={filterQuery}
+          onChangeText={setFilterQuery}
+          style={{ flex: 1 }}
+        />
+        <AntDesign name="search1" size={24} color="blue" />
       </View>
-   <FlatList
-    data={itemToRender} // שינוי מ-Menuitems ל-itemToRender
-    renderItem={renderCategory}
-    keyExtractor={(item) => item.category}
-  />
-</ScrollView>
-
+      <FlatList
+        data={itemToRender} // שינוי מ-Menuitems ל-itemToRender
+        renderItem={renderCategory}
+        keyExtractor={(item) => item.category}
+      />
+    </ScrollView>
   );
 };
 export default menu;
@@ -579,6 +576,6 @@ const styles = StyleSheet.create({
   },
   t: {
     fontSize: 20,
-    color:"red",
+    color: "red",
   },
 });

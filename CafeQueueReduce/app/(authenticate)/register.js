@@ -11,8 +11,8 @@ import {
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import { Entypo, Feather, Ionicons } from "@expo/vector-icons";
-import {supabase } from "../../Supabase";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { supabase } from "../../Supabase";
+
 
 const register = () => {
   const [name, setName] = useState("");
@@ -26,13 +26,13 @@ const register = () => {
       password: password,
     });
 
-    if(data?.user?.role == "authenticated"){
-        Alert.alert("You have been successfully registered")
+    if (data?.user?.role == "authenticated") {
+      Alert.alert("You have been successfully registered");
     }
-    if(error){
-        Alert.alert("Error while registering","please try again")
+    if (error) {
+      Alert.alert("Error while registering", "please try again");
     }
-}
+  };
 
   return (
     <SafeAreaView style={styles.first_view}>

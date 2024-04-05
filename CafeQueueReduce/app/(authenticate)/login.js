@@ -1,16 +1,25 @@
-import {StyleSheet, Text, View, SafeAreaView, KeyboardAvoidingView, TextInput, Pressable,Alert} from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  TextInput,
+  Pressable,
+  Alert,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import { Entypo } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { supabase } from "../../Supabase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Dialog from 'react-native-dialog';
+import Dialog from "react-native-dialog";
 const login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [dialogVisible, setDialogVisible] = useState(false);
-  const [userInput, setUserInput] = useState('');
+  const [userInput, setUserInput] = useState("");
   const router = useRouter();
   const handleCancel = () => {
     setDialogVisible(false);
@@ -27,42 +36,38 @@ const login = () => {
     if (data) {
       const token = data?.session?.access_token;
       AsyncStorage.setItem("authToken", token);
-      
-     
+
       router.replace("/(home)");
     }
-  }
+  };
   const handleConfirm = () => {
-    if (userInput === 'employee') {
+    if (userInput === "employee") {
       router.replace("/(employee)/loginemplye");
-      Alert.alert('employee', 'הפעולה בוצעה בהצלחה!');
-      
-    } 
-    if (userInput === 'admin') {
+      Alert.alert("employee", "הפעולה בוצעה בהצלחה!");
+    }
+    if (userInput === "admin") {
       router.replace("/(admin)/adminLogin");
-      Alert.alert('admin', 'הפעולה בוצעה בהצלחה!');
-    } 
-    else {
-      Alert.alert('הקוד שהוזן אינו נכון, נסה שנית.');
+      Alert.alert("admin", "הפעולה בוצעה בהצלחה!");
+    } else {
+      Alert.alert("הקוד שהוזן אינו נכון, נסה שנית.");
     }
     setDialogVisible(false);
-  }
+  };
 
-   useEffect(() => {
-     const checkLogin = async () => {
-     try {
-       const token = await AsyncStorage.getItem("authToken");
+  useEffect(() => {
+    const checkLogin = async () => {
+      try {
+        const token = await AsyncStorage.getItem("authToken");
         if (token) {
-         router.replace("/(home)");
-       }
-     } catch (error) {
-       console.log(error);
-     }
-     };
+          router.replace("/(home)");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
     checkLogin();
-   }, []);
-
+  }, []);
 
   return (
     <SafeAreaView style={styles.first_view}>
@@ -116,28 +121,31 @@ const login = () => {
         >
           <Text style={styles.register}>לקוח חדש? לחץ להרשם</Text>
         </Pressable>
-        <Pressable onPress={() => setDialogVisible(true)}
-        >
-         <Text style={styles.adminLogin}>התחברות למנהלים</Text>
-         <Dialog.Container visible={dialogVisible}>
-        <Dialog.Title>הזן קוד מנהל או עובד לכניסה לאיזור ההנהלה </Dialog.Title>
-        <Dialog.Input onChangeText={(text) => setUserInput(text)} />
-        <Dialog.Button label="בטל" onPress={handleCancel} />
-        <Dialog.Button label="אשר" onPress={handleConfirm}  />
-        </Dialog.Container>
+        <Pressable onPress={() => setDialogVisible(true)}>
+          <Text style={styles.adminLogin}>התחברות למנהלים</Text>
+          <Dialog.Container visible={dialogVisible}>
+            <Dialog.Title>
+              הזן קוד מנהל או עובד לכניסה לאיזור ההנהלה{" "}
+            </Dialog.Title>
+            <Dialog.Input onChangeText={(text) => setUserInput(text)} />
+            <Dialog.Button label="בטל" onPress={handleCancel} />
+            <Dialog.Button label="אשר" onPress={handleConfirm} />
+          </Dialog.Container>
         </Pressable>
-   
-        <Pressable onPress={() => setDialogVisible(true)}
-         
+
+        <Pressable
+          onPress={() => setDialogVisible(true)}
           style={{ marginTop: 15 }}
         >
           <Text style={styles.adminLogin}>התחברות לעובדים</Text>
           <Dialog.Container visible={dialogVisible}>
-        <Dialog.Title>הזן קוד מנהל או עובד לכניסה לאיזור ההנהלה </Dialog.Title>
-        <Dialog.Input onChangeText={(text) => setUserInput(text)} />
-        <Dialog.Button label="בטל" onPress={handleCancel} />
-        <Dialog.Button label="אשר" onPress={handleConfirm}  />
-        </Dialog.Container>
+            <Dialog.Title>
+              הזן קוד מנהל או עובד לכניסה לאיזור ההנהלה{" "}
+            </Dialog.Title>
+            <Dialog.Input onChangeText={(text) => setUserInput(text)} />
+            <Dialog.Button label="בטל" onPress={handleCancel} />
+            <Dialog.Button label="אשר" onPress={handleConfirm} />
+          </Dialog.Container>
         </Pressable>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -174,7 +182,7 @@ const styles = StyleSheet.create({
   },
   t_input: {
     color: "gray",
-    marginVertical: 10, 
+    marginVertical: 10,
     width: 300,
   },
   bottom_view: {
