@@ -43,7 +43,8 @@ const clock = () => {
         return;
       }
 
-      const totalSalary = durationInSeconds * salaryPerHour;
+      const hoursWorked = durationInSeconds / 3600; // Convert seconds to hours
+      const totalSalary = hoursWorked * salaryPerHour;
 
       const { error } = await supabase
         .from('time_clock')
@@ -56,6 +57,8 @@ const clock = () => {
       } else {
         setStatus('יצא');
         console.log(`Clocked out. Total salary: ${totalSalary}`);
+        console.log('Employee:', name);
+        console.log('Total Salary:', totalSalary);
       }
 
       setShiftDuration(durationInSeconds);
@@ -108,15 +111,15 @@ const clock = () => {
           Shift duration: {formatTime(shiftDuration)}
         </Text>
       )}
-      <TouchableOpacity style={styles.ClockButton}>
+      <TouchableOpacity style={styles.ClockButtonContainer}>
+        <Button
+          title={isOnShift ? 'Press to Clock Out' : 'Press to Clock In'}
+          onPress={handleShiftToggle}
+          color="#00BFFF"
+        />
         <Text style={styles.status}>
           {isOnShift ? 'You are currently on shift' : 'You are off shift'}
         </Text>
-        <Button
-          title={isOnShift ? 'Clock Out' : 'Clock In'}
-          onPress={handleShiftToggle}
-          color="white"
-        />
       </TouchableOpacity>
       <TextInput
         style={styles.inputField}
@@ -147,12 +150,9 @@ const styles = StyleSheet.create({
   },
   status: {
     fontSize: 18,
-    marginBottom: 20,
+    marginTop: 10,
     textAlign: 'center',
-    borderRadius: 20,
-    backgroundColor: '#00BFFF',
-    padding: 15,
-    color: 'white',
+    color: '#808080',
   },
   duration: {
     fontSize: 16,
@@ -175,12 +175,9 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     overflow: 'hidden',
   },
-  ClockButton: {
-    marginTop: 20,
-    backgroundColor: "#00BFFF",
-    borderRadius: 20,
-    padding: 15,
-    elevation: 2,
+  ClockButtonContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   inputField: {
     borderWidth: 1,
