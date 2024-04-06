@@ -1,109 +1,129 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  StyleSheet,
-} from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome"; // Ensure you have this installed
+import { View, Text, TouchableOpacity, TextInput, Button, StyleSheet, StatusBar } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome"; // Make sure you have this installed
 import { useRouter } from "expo-router";
 import { supabase } from "../../Supabase"; // Import your Supabase client
 
+// Function to format time for convenient display
+const formatTime = (totalSeconds) => {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = Math.floor(totalSeconds % 60);
+  return `${hours} hours ${minutes} minutes ${seconds} seconds`;
+};
+
 const clock = () => {
+  const [isOnShift, setIsOnShift] = useState(false);
+  const [shiftStartTime, setShiftStartTime] = useState(null);
+  const [shiftDuration, setShiftDuration] = useState(0);
   const [name, setName] = useState('');
   const [salaryPerHour, setSalaryPerHour] = useState(35);
-  const [currentTime, setCurrentTime] = useState('');
   const [status, setStatus] = useState('');
   const router = useRouter();
 
+  const handleShiftToggle = async () => {
+    if (isOnShift) {
+      // Clock out
+      const currentTime = new Date();
+      const durationInMilliseconds = currentTime - shiftStartTime;
+      const durationInSeconds = durationInMilliseconds / 1000;
+
+      const clockOutTime = currentTime.toISOString();
+      const { data: clockInData, error: clockInError } = await supabase
+        .from('time_clock')
+        .select('*')
+        .eq('name', name)
+        .order('clock_in', { ascending: false })
+        .limit(1)
+        .single();
+
+      if (clockInError) {
+        console.log('Error fetching clock-in data:', clockInError);
+        setStatus('Error fetching clock-in data');
+        return;
+      }
+
+      const totalSalary = durationInSeconds * salaryPerHour;
+
+      const { error } = await supabase
+        .from('time_clock')
+        .update({ clock_out: clockOutTime, total_salary: totalSalary })
+        .eq('id', clockInData.id);
+
+      if (error) {
+        console.log('Error clocking out:', error);
+        setStatus('Error clocking out');
+      } else {
+        setStatus('יצא');
+        console.log(`Clocked out. Total salary: ${totalSalary}`);
+      }
+
+      setShiftDuration(durationInSeconds);
+    } else {
+      // Clock in
+      setShiftStartTime(new Date());
+      const clockInTime = new Date().toISOString();
+      const { data, error } = await supabase
+        .from('time_clock')
+        .insert([
+          { name, clock_in: clockInTime, salary_per_hour: salaryPerHour }
+        ]);
+
+      if (error) {
+        console.log('Error clocking in:', error);
+        setStatus('Error clocking in');
+      } else {
+        setStatus('נכנס');
+        console.log('Clock in data:', data);
+      }
+    }
+    setIsOnShift(!isOnShift);
+  };
+
+  // Update shift time every second
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentTime(new Date().toLocaleTimeString());
-    }, 1000);
-    return () => clearInterval(intervalId);
-  }, []);
+    if (isOnShift) {
+      const interval = setInterval(() => {
+        const currentTime = new Date();
+        const durationInMilliseconds = currentTime - shiftStartTime;
+        const durationInSeconds = durationInMilliseconds / 1000;
+        setShiftDuration(durationInSeconds);
+      }, 1000);
 
-  const handleClockIn = async () => {
-    const clockInTime = new Date().toISOString();
-    const { data, error } = await supabase
-      .from('time_clock')
-      .insert([
-        { name, clock_in: clockInTime, salary_per_hour: salaryPerHour }
-      ]);
-
-    if (error) {
-      console.log('Error clocking in:', error);
-      setStatus('Error clocking in');
-    } else {
-      setStatus('נכנס');
-      console.log('Clock in data:', data);
+      return () => clearInterval(interval);
     }
-  };
-
-  const handleClockOut = async () => {
-    const clockOutTime = new Date().toISOString();
-    let { data: clockInData, error: clockInError } = await supabase
-      .from('time_clock')
-      .select('*')
-      .eq('name', name)
-      .order('clock_in', { ascending: false })
-      .limit(1)
-      .single();
-
-    if (clockInError) {
-      console.log('Error fetching clock-in data:', clockInError);
-      setStatus('Error fetching clock-in data');
-      return;
-    }
-
-    const hoursWorked = (new Date(clockOutTime) - new Date(clockInData.clock_in)) / (1000 * 60 * 60);
-    const totalSalary = hoursWorked * clockInData.salary_per_hour;
-    const { error } = await supabase
-      .from('time_clock')
-      .update({ clock_out: clockOutTime, total_salary: totalSalary })
-      .eq('id', clockInData.id);
-
-    if (error) {
-      console.log('Error clocking out:', error);
-      setStatus('Error clocking out');
-    } else {
-      setStatus('יצא');
-      console.log(`Clocked out. Total salary: ${totalSalary}`);
-    }
-  };
+  }, [isOnShift, shiftStartTime]);
 
   return (
     <View style={styles.container}>
-      {/* Time Display and Status */}
-      <Text style={styles.timeDisplay}>{currentTime}</Text>
-      <Text style={styles.statusIndicator}>{status}</Text>
-
-      {/* Action Buttons */}
-      <View style={styles.actionButtonsContainer}>
-        <TouchableOpacity
-          onPress={handleClockIn}
-          style={[styles.actionButton, styles.clockInButton]}
-        >
-          <Icon name="check" size={30} color="#fff" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={handleClockOut}
-          style={[styles.actionButton, styles.clockOutButton]}
-        >
-          <Icon name="times" size={30} color="#fff" />
-        </TouchableOpacity>
+      {/* Set the status bar color */}
+      <StatusBar backgroundColor="#00BFFF" />
+      
+      <View style={styles.Viewtitle}>
+        <Text style={styles.title}>כניסה ויציאה ממשמרת</Text>
       </View>
-
-      {/* Input Field for Name (for simplicity) */}
+      <Text style={styles.header}>Employee/Manager Shift</Text>
+      {isOnShift && (
+        <Text style={styles.duration}>
+          Shift duration: {formatTime(shiftDuration)}
+        </Text>
+      )}
+      <TouchableOpacity style={styles.ClockButton}>
+        <Text style={styles.status}>
+          {isOnShift ? 'You are currently on shift' : 'You are off shift'}
+        </Text>
+        <Button
+          title={isOnShift ? 'Clock Out' : 'Clock In'}
+          onPress={handleShiftToggle}
+          color="white"
+        />
+      </TouchableOpacity>
       <TextInput
         style={styles.inputField}
         placeholder="הקלד את שמך..."
         value={name}
         onChangeText={setName}
       />
-
-      {/* Navigate Back Button */}
       <TouchableOpacity
         onPress={() => router.replace("/homeAdmin")}
         style={styles.backButton}
@@ -117,44 +137,50 @@ const clock = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#fff",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  timeDisplay: {
-    fontSize: 48,
-    fontWeight: "bold",
-    marginVertical: 20,
-  },
-  actionButtonsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    width: "100%",
-    paddingHorizontal: 30,
-    marginVertical: 20,
-  },
-  actionButton: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 3,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
-  },
-  clockInButton: {
-    backgroundColor: "#32CD32", // Green color
-  },
-  clockOutButton: {
-    backgroundColor: "#FF4500", // Red color
-  },
-  statusIndicator: {
+  header: {
     fontSize: 24,
-    textAlign: "center",
-    marginVertical: 10,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  status: {
+    fontSize: 18,
+    marginBottom: 20,
+    textAlign: 'center',
+    borderRadius: 20,
+    backgroundColor: '#00BFFF',
+    padding: 15,
+    color: 'white',
+  },
+  duration: {
+    fontSize: 16,
+    marginBottom: 10,
+    borderRadius: 20,
+    backgroundColor: '#00BFFF',
+    padding: 15,
+    color: 'black',
+  },
+  title: {
+    fontSize: 30,
+    color: "white",
+    backgroundColor: "#00BFFF",
+    borderRadius: 30,
+    fontWeight: "bold",
+    padding: 10,
+  },
+  Viewtitle: {
+    marginBottom: 40,
+    borderRadius: 30,
+    overflow: 'hidden',
+  },
+  ClockButton: {
+    marginTop: 20,
+    backgroundColor: "#00BFFF",
+    borderRadius: 20,
+    padding: 15,
+    elevation: 2,
   },
   inputField: {
     borderWidth: 1,
@@ -170,7 +196,8 @@ const styles = StyleSheet.create({
   },
   backButtonText: {
     fontSize: 18,
-    color: "#0000FF", // Example color
+    color: "#0000FF",
   },
 });
+
 export default clock;
