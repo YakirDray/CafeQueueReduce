@@ -47,7 +47,7 @@ const loginemplye = () => {
       const token = data?.session?.access_token;
       AsyncStorage.setItem("authToken", token);
 
-      router.replace("/(admin)/clock");
+      router.replace("/clocke");
     }
   };
 
