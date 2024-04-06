@@ -12,7 +12,7 @@ const formatTime = (totalSeconds) => {
   return `${hours} hours ${minutes} minutes ${seconds} seconds`;
 };
 
-const clock = () => {
+const clocke = () => {
   const [isOnShift, setIsOnShift] = useState(false);
   const [shiftStartTime, setShiftStartTime] = useState(null);
   const [shiftDuration, setShiftDuration] = useState(0);
@@ -101,11 +101,11 @@ const clock = () => {
     <View style={styles.container}>
       {/* Set the status bar color */}
       <StatusBar backgroundColor="#00BFFF" />
-      
+
       <View style={styles.Viewtitle}>
         <Text style={styles.title}>כניסה ויציאה ממשמרת</Text>
       </View>
-      <Text style={styles.header}>Manager Shift</Text>
+      <Text style={styles.header}>Employee Shift</Text>
       {isOnShift && (
         <Text style={styles.duration}>
           Shift duration: {formatTime(shiftDuration)}
@@ -128,7 +128,7 @@ const clock = () => {
         onChangeText={setName}
       />
       <TouchableOpacity
-        onPress={() => router.replace("/homeAdmin")}
+        onPress={() => router.replace("/(authenticate)/login")}
         style={styles.backButton}
       >
         <Text style={styles.backButtonText}>חזור</Text>
@@ -197,4 +197,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default clock;
+export default clocke;
