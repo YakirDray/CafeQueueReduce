@@ -85,8 +85,8 @@ const Index = () => {
       try {
         const { data, error } = await supabase.from("orders_sami_d").insert([
           {
-            name: "Yakir-Dray",
-            email: "Yakir@sce.com",
+            name: "admin",
+            email: "admin@sce.com",
             cart: cart,
           },
         ]);

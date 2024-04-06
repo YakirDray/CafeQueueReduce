@@ -45,7 +45,11 @@ const login = () => {
       router.replace("/(employee)/loginemplye");
       Alert.alert("employee", "הפעולה בוצעה בהצלחה!");
     }
-    if (userInput === "admin") {
+      else {
+      Alert.alert("הקוד שהוזן אינו נכון, נסה שנית.");
+    }
+    setDialogVisible(false); 
+   if (userInput === "admin") {
       router.replace("/(admin)/adminLogin");
       Alert.alert("admin", "הפעולה בוצעה בהצלחה!");
     } else {
