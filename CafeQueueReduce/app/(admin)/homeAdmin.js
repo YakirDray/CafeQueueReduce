@@ -64,7 +64,7 @@ const homeAdmin = () => {
   ];
 
   const handleItemPress = (item) => {
-    // כאן תוסיף את הניווט לעמוד הרצוי בהתאם לפריט שנבחר
+    // כאן נוסיף את הניווט לעמוד הרצוי בהתאם לפריט שנבחר
     if (item.id === "1") {
         router.replace("/arrangement_table");
     } else if (item.id === "2") {
