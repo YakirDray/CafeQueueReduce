@@ -12,8 +12,6 @@ import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import { Entypo, Feather, Ionicons } from "@expo/vector-icons";
 import { supabase } from "../../Supabase";
-
-
 const register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

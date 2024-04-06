@@ -7,7 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Image,
+ 
 } from "react-native";
 
 const Categories = () => {
