@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, StyleSheet, Text, View, TouchableOpacity, TextInput, Image,Alert } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  Alert,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import Carousel from "../../Components/Carousal";
@@ -75,18 +83,16 @@ const Index = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        
-        const { data, error } = await supabase.from("orders_sami").insert([
+        const { data, error } = await supabase.from("orders_sami_d").insert([
           {
-           name:"Yakir-Dray",
-           email: "Yakir@sce.com",
-           cart: cart,
-         
-          }
+            name: "Yakir-Dray",
+            email: "Yakir@sce.com",
+            cart: cart,
+          },
         ]);
-        
+
         if (error) {
-          console.error("Error fetching data:", error);
+          console.error("Error fetching data:.form wrong", error);
         } else {
           setData(data);
         }
@@ -101,18 +107,17 @@ const Index = () => {
   const handleLogout = async () => {
     // Display an alert to confirm logout
     Alert.alert(
-      'התנתקות',
-      'האם אתה בטוח שברצונך להתנתק מהחשבון שלך?',
+      "התנתקות",
+      "האם אתה בטוח שברצונך להתנתק מהחשבון שלך?",
       [
         {
-          text: 'ביטול',
-          style: 'cancel',
+          text: "ביטול",
+          style: "cancel",
         },
         {
-          text: 'כן',
+          text: "כן",
           onPress: async () => {
             try {
-              // מוחקים את הטוקן שמור באפליקציה (בדרך כלל השמירה המקומית של הטוקן)
               await AsyncStorage.removeItem("authToken");
               // מפנים את המשתמש לעמוד ההתחברות
               router.replace("/login");
@@ -126,15 +131,12 @@ const Index = () => {
     );
   };
 
-
-
   return (
     <ScrollView style={styles.container}>
       <TouchableOpacity
         onPress={handleLogout}
         style={styles.logoutButton}
         onPressIn={() => setIsPressed(true)}
-       // onPressOut={() => setIsPressed(false)}
       >
         <Text style={styles.logoutText}>התנתקות</Text>
       </TouchableOpacity>
@@ -142,12 +144,14 @@ const Index = () => {
       <View style={styles.header}>
         <Ionicons name="restaurant-outline" size={24} color="#ffe4b5" />
         <View style={{ flex: 1 }}>
-          <Text style={{ fontSize: 15, fontWeight: "200" }}>אפליקצית ההזמנות של קפיטריית סמי שמעון</Text>
-          <Text style={{ color: "#E52850", fontSize: 16, marginTop: 3 }}>G18  הזמן מהר ולהרצאה לא תאחר</Text>
+          <Text style={{ fontSize: 15, fontWeight: "200" }}>
+            אפליקצית ההזמנות של קפיטריית סמי שמעון
+          </Text>
+          <Text style={{ color: "#E52850", fontSize: 16, marginTop: 3 }}>
+            G18 הזמן מהר ולהרצאה לא תאחר
+          </Text>
         </View>
       </View>
-
-   
 
       <Carousel />
       <Categories />
@@ -162,7 +166,9 @@ const Index = () => {
               <Text style={styles.itemName}>{item?.name}</Text>
               <Text style={styles.itemType}>{item?.type}</Text>
 
-              <View style={{ flexDirection: "row", alignItems: "center", gap: 3 }}>
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 3 }}
+              >
                 <Ionicons name="time" size={24} color="green" />
                 <Text>{item?.time} mins</Text>
               </View>
@@ -183,16 +189,11 @@ const Index = () => {
         ))}
       </ScrollView>
 
-
       <View style={{ marginHorizontal: 8 }}>
         {firstimpress?.map((item, index) => (
-
           <Catmenu key={index} item={item} />
-          
         ))}
       </View>
-
-     
     </ScrollView>
   );
 };
@@ -282,8 +283,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 20,
     color: "red",
-    fontSize:20,
-
+    fontSize: 20,
   },
   pressed: {
     backgroundColor: "grey",
@@ -303,6 +303,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#000",
     alignSelf: "flex-end",
-    
-},
+  },
 });

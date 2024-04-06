@@ -1,5 +1,4 @@
 import {
-  
   Text,
   View,
   SafeAreaView,
@@ -8,19 +7,19 @@ import {
 } from "react-native";
 import React, { useRef, useState, useEffect } from "react";
 import { useLocalSearchParams } from "expo-router";
-import moment from 'moment-timezone';
+import moment from "moment-timezone";
 import MapView, { Marker, Polyline } from "react-native-maps";
-import {  FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import fechData from "../(home)/index";
+
 const order = () => {
-
-
   const router = useRouter();
   const params = useLocalSearchParams();
   const [tip, setTip] = useState(0);
-  const timeInIsrael = moment().tz("Asia/Jerusalem").format("DD/MM/YYYY HH:mm:ss");
-  console.log("israel time-",timeInIsrael); 
+  const timeInIsrael = moment()
+    .tz("Asia/Jerusalem")
+    .format("DD/MM/YYYY HH:mm:ss");
+  console.log("israel time-", timeInIsrael);
   const mapView = useRef(null);
   const [coordinates] = useState([
     {
@@ -55,7 +54,7 @@ const order = () => {
             Delivery in 25 mins
           </Text>
           <Text style={{ color: "white", fontSize: 15, fontWeight: "600" }}>
-           time in israel {timeInIsrael}
+            time in israel {timeInIsrael}
           </Text>
         </View>
         <Text style={{ color: "white", fontSize: 15, fontWeight: "600" }}>
@@ -65,7 +64,7 @@ const order = () => {
       <MapView
         ref={mapView}
         initialRegion={{
-          latitude: 31.252973, 
+          latitude: 31.252973,
           longitude: 34.791462,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
@@ -187,7 +186,6 @@ const order = () => {
                       }}
                     >
                       Most Tipped
-                      
                     </Text>
                   </TouchableOpacity>
 
@@ -208,7 +206,7 @@ const order = () => {
                         fontWeight: "bold",
                       }}
                     >
-                       10₪
+                      10₪
                     </Text>
                   </TouchableOpacity>
                 </Pressable>
@@ -254,17 +252,14 @@ const order = () => {
         </View>
       </View>
       <View>
-      <Pressable 
-      
-      onPress={() => router.replace("/(home)") }><Text style={{fontSize:15,color:"red"}}>Thank you for the invitation, click to return to the homepage </Text></Pressable>
-      
+        <Pressable onPress={() => router.replace("/(home)")}>
+          <Text style={{ fontSize: 15, color: "red" }}>
+            Thank you for the invitation, click to return to the homepage{" "}
+          </Text>
+        </Pressable>
       </View>
-           
-     
-     
     </SafeAreaView>
   );
 };
 
 export default order;
-

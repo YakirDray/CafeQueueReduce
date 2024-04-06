@@ -1,12 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit'
-export const 
-CartSlice = createSlice({
+import { createSlice } from "@reduxjs/toolkit";
+export const CartSlice = createSlice({
   name: "cart",
   initialState: {
     cart: [],
   },
   reducers: {
-    addToCart: (state, action) => {//מוסיף מוצר 1 לסל
+    addToCart: (state, action) => {
+      //מוסיף מוצר 1 לסל
       const itemPresent = state.cart.find(
         (item) => item.id === action.payload.id
       );
@@ -17,19 +17,22 @@ CartSlice = createSlice({
         state.cart.push({ ...action.payload, quantity: 1 });
       }
     },
-    removeFromCart: (state, action) => {//מסיר מוצר לפי הID שלו מהסל
+    removeFromCart: (state, action) => {
+      //מסיר מוצר לפי הID שלו מהסל
       const removeItem = state.cart.filter(
         (item) => item.id !== action.payload.id
       );
       state.cart = removeItem;
     },
-    incrementQuantity: (state, action) => {//מגדיל את כמות המוצר בסל
+    incrementQuantity: (state, action) => {
+      //מגדיל את כמות המוצר בסל
       const itemPresent = state.cart.find(
         (item) => item.id === action.payload.id
       );
       itemPresent.quantity++;
     },
-    decrementQuantity: (state, action) => {//מוריד את כמות המוצר בסל אם 1 נסיר אותו
+    decrementQuantity: (state, action) => {
+      //מוריד את כמות המוצר בסל אם 1 נסיר אותו
       const itemPresent = state.cart.find(
         (item) => item.id === action.payload.id
       );
@@ -42,7 +45,8 @@ CartSlice = createSlice({
         itemPresent.quantity--;
       }
     },
-    cleanCart: (state) => {//ניקוי כל המוצרים בסל
+    cleanCart: (state) => {
+      //ניקוי כל המוצרים בסל
       state.cart = [];
     },
   },
@@ -56,5 +60,4 @@ export const {
   cleanCart,
 } = CartSlice.actions;
 
-export default CartSlice.reducer
-
+export default CartSlice.reducer;

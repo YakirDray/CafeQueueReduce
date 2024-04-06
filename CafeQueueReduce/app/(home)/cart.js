@@ -24,9 +24,9 @@ const cart = () => {
     ?.map((item) => item.quantity * item.price)
     .reduce((curr, prev) => curr + prev, 0);
   console.log(cart);
-  
- const fech =fechData;
- fech(cart)
+
+  const fech = fechData;
+  fech(cart);
   return (
     <>
       <ScrollView style={{ padding: 10, flex: 1, backgroundColor: "#F0F8FF" }}>
@@ -374,8 +374,6 @@ const cart = () => {
 
       {total === 0 ? null : (
         <Pressable
-    
-      
           style={{
             flexDirection: "row",
             alignItems: "center",
@@ -392,9 +390,7 @@ const cart = () => {
           </View>
 
           <Pressable
-         
             onPress={() => {
-             
               dispatch(cleanCart());
               router.replace({
                 pathname: "/order",
@@ -420,7 +416,6 @@ const cart = () => {
               <Text
                 style={{ color: "white", fontSize: 15, fontWeight: "bold" }}
               >
-                
                 {total}
               </Text>
               <Text
